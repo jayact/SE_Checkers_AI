@@ -15,7 +15,7 @@ public class AI  extends Player{
 	}
 	
 	@Override
-	public Board takeTurn(Board b) {
+	public Board takeTurn(Board b, GUI gui) {
 		// TODO Auto-generated method stub
 		return null;
 	}

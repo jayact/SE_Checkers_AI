@@ -17,9 +17,13 @@ public class Piece
 	{
 		return color;
 	}
-	public void king()
+	public void setColor(char color)
 	{
-		king = true;
+		this.color = color;
+	}
+	public void king(boolean status)
+	{
+		king = status;
 	}
 	public int[] getPosition()
 	{
@@ -40,8 +44,15 @@ public class Piece
 			return false;
 		Piece b = (Piece) j;
 		int[] b_pos = b.getPosition();
-		if(b_pos[0] != row && b_pos[1] != col || b.getColor() != color || king != b.isKing())
+		if(b_pos[0] != row)
 			return false;
-		return true;
+		else if(b_pos[1] != col)
+			return false;
+		else if(b.isKing() != king)
+			return false;
+		else if(b.getColor() != color)
+			return false;
+		else
+			return true;
 	}
 }
