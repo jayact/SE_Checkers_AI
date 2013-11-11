@@ -1,5 +1,8 @@
-package checkers;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/ai-work
 public abstract class Algorithm 
 {
 	/**
@@ -7,9 +10,24 @@ public abstract class Algorithm
 	 * @param b
 	 * @return
 	 */
+<<<<<<< HEAD
 	protected int rateBoard(Board b)
 	{
 		return 0;
+=======
+	protected int rateBoard(Board b, char piece)
+	{
+            int hvalue = 0;
+		if(piece=='R')
+                {
+                    hvalue += (b.rUnits()-b.bUnits());
+                }
+                else
+                {
+                    hvalue += (b.bUnits()-b.rUnits());
+                }
+             return hvalue;
+>>>>>>> origin/ai-work
 	}
 	
 	/**
