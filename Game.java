@@ -11,20 +11,37 @@ public class Game
 	{
 		startGame();
 	}
-	
+	/**
+	 * Sets player 1
+	 * @param player1
+	 */
 	public static void setP1(Player player1)
 	{
 		p1 = player1;
 	}
+	/**
+	 * Sets player 2
+	 * @param player2
+	 */
 	public static void setP2(Player player2)
 	{
 		p2 = player2;
 	}
+	/**
+	 * Sets the GUI to be used
+	 * @param Gui
+	 */
 	public static void setGUI(GUI Gui)
 	{
 		gui = Gui;
 	}
 	
+	/**
+	 * Sets up the game, then calls runGame()
+	 * This is all default for now. Once the menu GUI
+	 * is set up, this function won't exist.
+	 * @throws Exception
+	 */
 	public static void startGame() throws Exception
 	{
 		setP1(new User('R'));
@@ -34,6 +51,10 @@ public class Game
 		runGame();
 	}
 	
+	/**
+	 * Runs the game until a winner is declared.
+	 * @throws Exception
+	 */
 	public static void runGame() throws Exception
 	{
 		int count = 0;

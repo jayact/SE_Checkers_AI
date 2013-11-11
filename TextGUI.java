@@ -6,7 +6,29 @@ import java.io.InputStreamReader;
 
 public class TextGUI implements GUI
 {
+	/**
+	 * Work in progress.
+	 */
+	private static void clearConsole()
+	{
+	    try
+	    {
+	        String os = System.getProperty("os.name");
 
+	        if (os.contains("Windows"))
+	        {
+	            Runtime.getRuntime().exec("cls");
+	        }
+	        else
+	        {
+	            Runtime.getRuntime().exec("clear");
+	        }
+	    }
+	    catch (Exception exception)
+	    {
+	        //  Handle exception.
+	    }
+	}
 	
 	/**
 	 * This just displays the board as is.
@@ -14,8 +36,15 @@ public class TextGUI implements GUI
 	 */
 	public void display(Board b) 
 	{
+		System.out.print("  ");
+		for(int i = 0; i < 8; i++)
+		{
+			System.out.print (i+ " ");
+		}
+		System.out.println();
 		for(int row = 0; row < 8; row++)
 		{
+			System.out.print(row + "|");
 			for(int col = 0; col < 8; col++)
 			{
 				Piece p = b.getPiece(row, col);
@@ -35,9 +64,15 @@ public class TextGUI implements GUI
 	 */
 	public void display(Board b, Piece[] moves)
 	{
-		
+		System.out.print("  ");
+		for(int i = 0; i < 8; i++)
+		{
+			System.out.print (i+ " ");
+		}
+		System.out.println();
 		for(int row = 0; row < 8; row++)
 		{
+			System.out.print(row + "|");
 			for(int col = 0; col < 8; col++)
 			{
 				boolean found = false;

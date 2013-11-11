@@ -8,7 +8,13 @@ public class User extends Player
 		super(piece);
 	}
 	
-	@Override
+	
+	/**
+	 * Takes the turn by user input, by the GUI.
+	 * @param b is the board.
+	 * @param gui is the GUI used for out/input
+	 * @Override
+	 */
 	public Board takeTurn(Board b, GUI gui) throws Exception {
 		gui.display(b);
 		System.out.println(piece + ": Please select a piece to move (row,col):");

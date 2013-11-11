@@ -9,15 +9,23 @@ public class AI  extends Player{
 		setAlgo(algo);
 	}
 	
+	/**
+	 * Sets the algorithm for the AI to use
+	 * @param algo is the algorithm to set
+	 */
 	public void setAlgo(Algorithm algo)
 	{
 		this.algo = algo;
 	}
 	
-	@Override
+	
+	/**
+	 * Takes the turn.
+	 * @Override
+	 */
 	public Board takeTurn(Board b, GUI gui) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 }
