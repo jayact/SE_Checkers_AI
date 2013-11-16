@@ -1,4 +1,5 @@
 package checkers;
+import arrayManagement.ArrayManager;
 
 public class Board {
 	private Piece[][] board;
@@ -56,6 +57,12 @@ public class Board {
 		return board;
 	}
 	
+	/**
+	 * returns the piece at that location
+	 * @param row
+	 * @param col
+	 * @return the piece found.
+	 */
 	public Piece getPiece(int row, int col)
 	{
 		return board[row][col];
@@ -64,7 +71,7 @@ public class Board {
 	/**
 	 * returns a combined list of available jumps and moves. Does NOT return it recursively, meaning, further jumps will be given as needed by the validJumps function
 	 * @param p is the piece in question
-	 * @return is the list of valic moves (represented as pieces)
+	 * @return is the list of valid moves (represented as pieces)
 	 * @throws Exception 
 	 */
 	public Piece[] validMoves(Piece p) throws Exception
@@ -105,7 +112,7 @@ public class Board {
 				}
 			}
 			
-			if(p_col < 8)
+			if(p_col < 7)
 			{
 				if(board[p_row-1*direction][p_col+1].getColor() == '-')
 				{
@@ -125,7 +132,7 @@ public class Board {
 					count++;
 				}
 			}
-			if(p_col < 8)
+			if(p_col < 7)
 			{
 				if(board[p_row+1*direction][p_col+1].getColor() == '-')
 				{
@@ -135,12 +142,11 @@ public class Board {
 			}
 		}
 		//Now, check the jumps!
-		moves = resizeArray(moves);
+		moves = (Piece[])ArrayManager.resizeArray(moves, Piece.class);
 		Piece[] jump_moves = validJumps(p);
-		moves = combineArrays(moves, jump_moves);
+		moves = (Piece[])ArrayManager.combineArrays(moves, jump_moves, Piece.class);
 		return moves;
 	}
-	
 	/**
 	 * this checks the jumps available at the current position. will need to call again if a jump is made, as it does NOT do recursive jumps.
 	 * reason is due to piece removal involved in said jumps.
@@ -208,54 +214,16 @@ public class Board {
 				}
 			}
 		}
-		moves = resizeArray(moves);
+		moves = (Piece[])ArrayManager.resizeArray(moves, Piece.class);
 		return moves;
 	}
 	
-	/**
-	 * just a helper function, combines two arrays (jump and move array)
-	 * @param a is the first array
-	 * @param b is the second array
-	 * @return the combined arrays.
-	 */
-	private Piece[] combineArrays(Piece[] a, Piece[] b)
-	{
-		Piece[] p = new Piece[a.length + b.length];
-		for(int j = 0; j < a.length; j++)
-		{
-			p[j] = a[j];
-		}
-		for(int j = 0; j < b.length; j++)
-		{
-			p[j+a.length] = b[j];
-		}
-		return p;
-	}
-	private Piece[] resizeArray(Piece[] a)
-	{
-		int a_count = 0;
-		for(int i = 0; i < a.length; i++)
-		{
-			if(a[i] != null)
-				a_count++;
-		}
-		Piece[] result = new Piece[a_count];
-		for(int i = 0; i < a.length; i++)
-		{
-			if(a[i] != null)
-			{
-				result[a_count-1] = a[i];
-				a_count--;
-			}
-		}
-		return result;
-	}
 	
 	/**
 	 * makes the move for the user. returns true if there are further jumps available, false otherwise.
 	 * @param old_p curent piece position
 	 * @param new_p new piece position
-	 * @return true if further jumps available, false otherwise
+	 * @return true if further jumps available, false otherwise OR kinged
 	 * @throws Exception if new position is not available for this piece to access
 	 */
 	public boolean makeMove(Piece old_p, Piece new_p) throws Exception
@@ -263,6 +231,8 @@ public class Board {
 		Piece[] moves = validMoves(old_p);
 		
 		boolean found = false;
+		boolean available = false;
+		boolean kinged = false;
 		int i = 0;
 		while(i < moves.length && found == false)
 		{
@@ -295,8 +265,13 @@ public class Board {
 		board[pos_new[0]][pos_new[1]].king(board[pos_old[0]][pos_old[1]].isKing());
 		board[pos_old[0]][pos_old[1]].king(false);
 		board[pos_old[0]][pos_old[1]].setColor('-');
-		if(pos_new[0] == up_limit)
+		
+		if(pos_new[0] == up_limit && board[pos_new[0]][pos_new[1]].isKing() == false)
+		{
 			board[pos_new[0]][pos_new[1]].king(true);
+			kinged = true;
+		}
+		
 		if(row_diff == 2)
 		{
 			char color = board[pos_new[0]-1*(pos_new[0]-pos_old[0])/2][pos_new[1]-1*(pos_new[1]-pos_old[1])/2].getColor();
@@ -306,9 +281,10 @@ public class Board {
 				r_units--;
 			board[pos_new[0]-1*(pos_new[0]-pos_old[0])/2][pos_new[1]-1*(pos_new[1]-pos_old[1])/2].setColor('-');
 			if(validJumps(new_p).length != 0)
-				return true;
+				available = true;
 		}
-		return false;
+		
+		return available && !kinged;
 	}
 	
 	/**
@@ -320,5 +296,32 @@ public class Board {
 		if(b_units == 0 || r_units == 0)
 			return true;
 		return false;
+	}
+	
+	/**
+	 * This returns the list of pieces that can jump. A jump must be made, if available, as per the rules.
+	 * @param piece is the color
+	 * @return a list of pieces that can jump.
+	 */
+	public Piece[] getJumps(char piece)
+	{
+		Piece[] result = new Piece[12];
+		int count = 0;
+		for(int row = 0; row < 8; row++)
+		{
+			for(int col = 0; col < 8; col++)
+			{
+				if(board[row][col].getColor() == piece)
+				{
+					Piece[] r = validJumps(board[row][col]);
+					if(r.length != 0)
+					{
+						result[count] = board[row][col];
+						count++;
+					}
+				}
+			}
+		}
+		return ArrayManager.resizeArray(result, Piece.class);
 	}
 }

@@ -14,7 +14,7 @@ public interface GUI
 	 * @param b is the board.
 	 * @param moves is the list of moves, represented as pieces.
 	 */
-	public void display(Board b, Piece[] moves);
+	public void display(Board b, Piece[] moves, char display);
 	/**
 	 * Gets the piece to move from the user.
 	 * @param b is the board.
@@ -32,4 +32,9 @@ public interface GUI
 	 * @throws IOException if input is improper (ie. e,f instead of 1,2.)
 	 */
 	public Piece getMove(Board b, Piece[] moves, char piece) throws IOException;
+	
+	/**
+	 * Standard help command
+	 */
+	public void help();
 }

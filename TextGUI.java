@@ -62,7 +62,7 @@ public class TextGUI implements GUI
 	 * This displays the board and the moves for the selected piece.
 	 * @Override
 	 */
-	public void display(Board b, Piece[] moves)
+	public void display(Board b, Piece[] moves, char display)
 	{
 		System.out.print("  ");
 		for(int i = 0; i < 8; i++)
@@ -82,7 +82,7 @@ public class TextGUI implements GUI
 					if(row == pos[0] && col == pos[1])
 					{
 						found = true;
-						System.out.print("+ ");
+						System.out.print(display + " ");
 					}
 				}
 				if(found == false)
@@ -117,6 +117,11 @@ public class TextGUI implements GUI
 			{
 				if(in.length() == 3 && in.charAt(1) == ',')
 					input = true;
+				else if(in.equals("help"))
+				{
+					help();
+					in = br.readLine();
+				}
 				else
 				{
 					System.out.println("Invalid input. Please separate row and column by ',' ex 3,4");
@@ -157,7 +162,12 @@ public class TextGUI implements GUI
 				
 				if(in.equals("exit"))
 					return null;
-				if(in.length() == 3 && in.charAt(1) == ',')
+				else if(in.equals("help"))
+				{
+					help();
+					in = br.readLine();
+				}
+				else if(in.length() == 3 && in.charAt(1) == ',')
 					input = true;
 				else
 				{
@@ -188,4 +198,13 @@ public class TextGUI implements GUI
 		return b.getPiece(row, col);
 	}
 	
+	/**
+	 * Standard help command
+	 * @Override
+	 */
+	public void help()
+	{
+		System.out.println("Welcome to checkers! Here are the instructions:");
+		System.out.println("To select a piece or move, enter it as follows: row, col. Substitute row and col for the selected values");
+	}
 }
