@@ -1,3 +1,5 @@
+package checkers;
+
 
 import java.util.LinkedList;
 import java.util.logging.Level;
