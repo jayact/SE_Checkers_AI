@@ -324,4 +324,12 @@ public class Board {
 		}
 		return ArrayManager.resizeArray(result, Piece.class);
 	}
+	public int rUnits()
+	{
+		return r_units;
+	}
+	public int bUnits()
+	{
+		return b_units;
+	}
 }
