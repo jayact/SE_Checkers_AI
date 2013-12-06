@@ -1,6 +1,7 @@
 package checkers;
 
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 /*
@@ -37,14 +38,55 @@ public class Node {
      * @param piece specifies player that can make the move
      * @throws Exception 
      */
-    public void createChildren(char piece) throws Exception
+    public void createChildren(char color) throws Exception
     {
-        for(Board b: current.finalMoves(piece))
+        ArrayList<Piece> moveable = parent.getCurrent().allJumps(color);
+        if(moveable.size() != 0)
         {
-            Node temp = new Node(this, b);
-            //temp.rateBoard(b, piece);
-            children.add(temp);
+            for(Piece move : moveable)
+            {
+                ArrayList<Board> temp = childrenHelper(move);
+                for(Board t : temp)
+                {
+                    children.add(new Node(this, t));
+                }
+            }
         }
+        else
+        {
+            moveable = parent.getCurrent().allMoves(color);
+            for(Piece move : moveable)
+            {
+                ArrayList<Piece> move_list= parent.getCurrent().validMoves(move);
+                for(Piece move_to : move_list)
+                {
+                    Board temp = new Board(parent.getCurrent());
+                    temp.makeMove(move, move_to);
+                }
+            }
+        }
+    }
+   
+    private ArrayList<Board> childrenHelper(Piece move) throws Exception
+    {
+        ArrayList<Board> result = new ArrayList<Board>();
+        ArrayList<Piece> move_list = parent.getCurrent().validJumps(move);
+        for(Piece move_to : move_list)
+        {
+            Board temp = new Board(parent.getCurrent());
+            boolean remain = temp.makeMove(move, move_to);
+            result.add(temp);
+            ArrayList<Board> future_list;
+            if(remain == true)
+            {
+                future_list = childrenHelper(move_to);
+                for(Board future : future_list)
+                {
+                    result.add(future);
+                }
+            }
+        }
+        return result;
     }
     
     /**
