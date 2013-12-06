@@ -66,4 +66,8 @@ public class SolutionSpace {
         return root;
     }
     
+    public int getPlyDepth()
+    {
+            return plyDepth;
+    }
 }
