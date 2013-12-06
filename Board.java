@@ -49,8 +49,7 @@ public class Board {
 	}
 	
 	/**
-	 * returns the  board
-	 * @return 
+	 * @return the board.
 	 */
 	public Piece[][] getBoard()
 	{
@@ -66,6 +65,21 @@ public class Board {
 	public Piece getPiece(int row, int col)
 	{
 		return board[row][col];
+	}
+	
+	/**
+	 * @return the number of red units.
+	 */
+	public int rUnits()
+	{
+		return r_units;
+	}
+	/**
+	 * @return the number of black units.
+	 */
+	public int bUnits()
+	{
+		return b_units;
 	}
 	
 	/**
@@ -300,10 +314,10 @@ public class Board {
 	
 	/**
 	 * This returns the list of pieces that can jump. A jump must be made, if available, as per the rules.
-	 * @param piece is the color
+	 * @param color is the color of the owner.
 	 * @return a list of pieces that can jump.
 	 */
-	public Piece[] getJumps(char piece)
+	public Piece[] getJumps(char color)
 	{
 		Piece[] result = new Piece[12];
 		int count = 0;
@@ -311,7 +325,7 @@ public class Board {
 		{
 			for(int col = 0; col < 8; col++)
 			{
-				if(board[row][col].getColor() == piece)
+				if(board[row][col].getColor() == color)
 				{
 					Piece[] r = validJumps(board[row][col]);
 					if(r.length != 0)
@@ -323,13 +337,5 @@ public class Board {
 			}
 		}
 		return ArrayManager.resizeArray(result, Piece.class);
-	}
-	public int rUnits()
-	{
-		return r_units;
-	}
-	public int bUnits()
-	{
-		return b_units;
 	}
 }
