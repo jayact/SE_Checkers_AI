@@ -1,6 +1,7 @@
 package checkers.checkers;
 
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 /*
@@ -33,15 +34,31 @@ public class Node {
     /**
      * Creates all possible moves from the current board and their cooresponding
      * Node object with the current position as the parent
-     * @param piece specifies player that can make the move
+     * @param color specifies player that can make the move
      * @throws Exception 
      */
-    public void createChildren(char piece) throws Exception
+    public void createChildren(char color) throws Exception
     {
-        for(Board b: current.finalMoves(piece))
-        {
-            children.add(new Node(current, b));
-        }
+    	ArrayList<Piece> moveable = parent.allJumps(color);
+    	if(moveable.size() != 0)
+    	{
+    		for(Piece move : moveable)
+    		{
+    			
+    		}
+    	}
+    	else
+    	{
+    		moveable = parent.allMoves(color);
+    		for(Piece move : moveable)
+    		{
+    			
+    		}
+    	}
+        //for(Board b: current.finalMoves(piece))
+        //{
+         //   children.add(new Node(current, b));
+        //}
 //        Board temp = current;
 //        for(int i=0;i<boardSize;i++)
 //        {
