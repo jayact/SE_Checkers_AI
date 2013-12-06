@@ -93,7 +93,7 @@ public class MiniMax extends checkers.Algorithm{
             Node minNode = null;
             for(Node n: current.getChildren())
             {
-                Node temp = minimize(n, min, depth-1);
+                Node temp = maximize(n, min, depth-1);
                 int tempRating = temp.getRating();
                 if(tempRating < minRating)
                 {
