@@ -258,6 +258,7 @@ public class Board {
 				}
 			}
 		}
+		
 		return moves;
 	}
 	
@@ -381,12 +382,60 @@ public class Board {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<Board> finalMoves(char color) throws Exception
+	/*public ArrayList<Board> finalMoves(char color) throws Exception
 	{
-		ArrayList result = allJumps(color);
-		if(result.size() != 0)
+		ArrayList<Board> result = new ArrayList<Board>();
+		ArrayList<Piece> moves = allJumps(color);
+		if(moves.size() != 0)
+		{
+			for(Piece move : moves)
+			{
+				ArrayList<Piece> jumps = validJumps(move);
+				for(Piece jump : jumps)
+				{
+					Board temp = new Board(this);
+					boolean cont = true;
+					while(cont == true)
+					{
+						cont = temp.makeMove(move, jump);
+						result.add(temp);
+						
+					}
+				}
+			}
 			return result;
-		result = new ArrayList<Board>();
+		}
+
+		for(int i = 0; i < row; i++)
+		{
+			for(int j = 0; j < col; j++)
+			{
+				Piece p = board.get(i).get(j);
+				if(p.getColor() != '-')
+				{
+					moves = validMoves(p);
+					for(Piece move : moves)
+					{
+						Board temp = new Board(this);
+						temp.makeMove(p, move);
+						result.add(temp);
+					}
+				}
+			}
+		}
+		return result;
+	}*/
+	
+	/**
+	 * Returns all pieces available to jump
+	 * @param color
+	 * @return
+	 * @throws Exception
+	 */
+	public ArrayList<Piece> allMoves(char color) throws Exception
+	{
+		ArrayList<Piece> result = new ArrayList<Piece>();
+
 		for(int i = 0; i < row; i++)
 		{
 			for(int j = 0; j < col; j++)
@@ -395,12 +444,8 @@ public class Board {
 				if(p.getColor() != '-')
 				{
 					ArrayList<Piece> moves = validMoves(p);
-					for(Piece move : moves)
-					{
-						Board temp = new Board(this);
-						temp.makeMove(p, move);
-						result.add(temp);
-					}
+					if(moves.size() != 0)
+						result.add(p);
 				}
 			}
 		}
