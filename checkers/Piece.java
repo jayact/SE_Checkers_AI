@@ -1,4 +1,4 @@
-package checkers;
+package checkers.checkers;
 
 public class Piece 
 {
@@ -87,5 +87,10 @@ public class Piece
 			return false;
 		else
 			return true;
+	}
+	
+	public String toString()
+	{
+		return color + " @ (" + row + "," + col + ")"; 
 	}
 }

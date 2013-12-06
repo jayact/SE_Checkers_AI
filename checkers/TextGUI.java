@@ -1,8 +1,9 @@
-package checkers;
+package checkers.checkers;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class TextGUI implements GUI
 {
@@ -62,7 +63,7 @@ public class TextGUI implements GUI
 	 * This displays the board and the moves for the selected piece.
 	 * @Override
 	 */
-	public void display(Board b, Piece[] moves, char display)
+	public void display(Board b, ArrayList<Piece> moves, char display)
 	{
 		System.out.print("  ");
 		for(int i = 0; i < 8; i++)
@@ -148,7 +149,7 @@ public class TextGUI implements GUI
 	 * This returns a move for the selected piece.
 	 * @Override
 	 */
-	public Piece getMove(Board b, Piece[] moves, char piece) throws IOException 
+	public Piece getMove(Board b, ArrayList<Piece> moves, char piece) throws IOException 
 	{
 		boolean valid = false;
 		int row, col;

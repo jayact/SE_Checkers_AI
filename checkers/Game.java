@@ -1,4 +1,4 @@
-package checkers;
+package checkers.checkers;
 
 public class Game 
 {

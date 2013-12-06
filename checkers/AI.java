@@ -1,4 +1,4 @@
-package checkers;
+package checkers.checkers;
 
 public class AI  extends Player{
 	private Algorithm algo;
