@@ -5,8 +5,10 @@ import java.util.logging.Logger;
 
 
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Creates a solution space of all possible moves from a root board position,
+ * alternating the moves from player to player.  The solution space will go 
+ * a to a fixed depth that can be changed to either increase speed or increase
+ * skill level
  */
 
 /**
@@ -15,8 +17,16 @@ import java.util.logging.Logger;
  */
 public class SolutionSpace {
     Node root;
-    int plyDepth = 5;
+    int plyDepth = 5;      
+    //decrease to increase speed
+    //increase to increase skill level
     
+    /**
+     * Creates an instance of a SolutionSpace from board b, with the first 
+     * player to move piece
+     * @param b initial board state
+     * @param piece player to move first
+     */
     public SolutionSpace(Board b, char piece)
     {
         root = new Node(null, b);
@@ -28,13 +38,16 @@ public class SolutionSpace {
         
     }
     
+    /*
+     * recursive helper method to generate children nodes
+     */
     private void helper(Node current, char piece, int count) throws Exception
     {
         char other;
-        if(piece == 'b')
-            other = 'r';
+        if(piece == 'B')
+            other = 'R';
         else
-            other = 'b';
+            other = 'B';
 
         if(count==0)
             return;
@@ -45,6 +58,9 @@ public class SolutionSpace {
         }
     }
     
+    /**
+     * @return the root position of the SolutionSpace
+     */
     public Node getRoot()
     {
         return root;

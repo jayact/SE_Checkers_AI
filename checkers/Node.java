@@ -4,8 +4,9 @@ package checkers;
 import java.util.LinkedList;
 
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Creates a node object to hold the structure of the solution space.  Capable 
+ * of generating the children of its current board for all posible moves of 
+ * player the player specified by piece
  */
 
 /**
@@ -18,12 +19,23 @@ public class Node {
     LinkedList<Node> children = new LinkedList<>();
     private static int boardSize = 8;
     
+    /**
+     * Creates an instance of a Node object
+     * @param parent the board state previous to the last move
+     * @param current the current board state
+     */
     public Node(Board parent, Board current)
     {
         this.parent = parent;
         this.current = current;
     }
     
+    /**
+     * Creates all possible moves from the current board and their cooresponding
+     * Node object with the current position as the parent
+     * @param piece specifies player that can make the move
+     * @throws Exception 
+     */
     public void createChildren(char piece) throws Exception
     {
         for(Board b: current.finalMoves(piece))
@@ -49,16 +61,29 @@ public class Node {
 //        }
     }
     
+    
+    /**
+     * Accessor for parent
+     * @return 
+     */
     public Board getParent()
     {
         return parent;
     }
     
+    /**
+     * Accessor for current board
+     * @return 
+     */
     public Board getCurrent()
     {
         return current;
     }
     
+    /**
+     * Accessor for children Nodes
+     * @return 
+     */
     public LinkedList<Node> getChildren()
     {
         return children;
