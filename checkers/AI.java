@@ -1,4 +1,4 @@
-package checkers.checkers;
+package checkers;
 
 public class AI  extends Player{
 	private Algorithm algo;
@@ -23,9 +23,10 @@ public class AI  extends Player{
 	 * Takes the turn.
 	 * @Override
 	 */
+    @Override
 	public Board takeTurn(Board b, GUI gui) {
 		// TODO Auto-generated method stub
-		return null;
+		return algo.getMove(b, piece);
 	}
 	
 }

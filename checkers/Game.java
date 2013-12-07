@@ -1,4 +1,6 @@
-package checkers.checkers;
+package checkers;
+
+import Algorithms.MiniMax;
 
 public class Game 
 {
@@ -44,7 +46,8 @@ public class Game
 	 */
 	public static void startGame() throws Exception
 	{
-		setP1(new User('B'));
+		setP1(new AI('B', new MiniMax()));
+                //setP1(new User('B'));
 		setP2(new User('R'));
 		setGUI(new TextGUI());
 		board = new Board();

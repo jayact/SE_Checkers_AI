@@ -1,26 +1,37 @@
-package checkers.checkers;
+package checkers;
 import java.util.ArrayList;
 
 
 public class Board {
-	private int b_units; //the number of black units on the board
-	private int r_units; //the number of red units on the board
-	ArrayList<ArrayList<Piece>> board; //the board in its current state
+	//private Piece[][] board;
+	private int b_units;
+	private int r_units;
+	ArrayList<ArrayList<Piece>> board;
+	private int row = 8;
+	private int col = 8;
 	
 	public Board()
 	{
 		setup();
 	}
-	/**
-	 * Constructor that takes sets this object up like the board passed in
-	 * @param board is the board whose values we are copying
-	 */
+	
 	public Board(Board board)
-	{
-		this.board = (ArrayList<ArrayList<Piece>>) board.getBoard().clone();
-		b_units = board.bUnits();
-		r_units = board.rUnits();
-	}
+    {
+        this.board = new ArrayList<ArrayList<Piece>>();
+        for(int i = 0; i < 8; i++)
+        {
+            this.board.add(new ArrayList<Piece>());
+            for(int j = 0; j < 8; j++)
+            {
+                Piece p = board.getPiece(i, j);
+                int[] pos = p.getPosition();
+                this.board.get(i).add(new Piece(p.getColor(), pos[0], pos[1]));
+                this.board.get(i).get(j).king(p.isKing());
+            }
+        }
+        b_units = board.bUnits();
+        r_units = board.rUnits();
+    }
 	
 	/**
 	 * sets the board up in the standard configuration
@@ -173,7 +184,7 @@ public class Board {
 			}
 			if(p_col < 7)
 			{
-				Piece temp = board.get(p_row+1*direction).get(p_col+1);
+				Piece temp = board.get(row+1*direction).get(p_col+1);
 				if(temp.getColor() == '-')
 				{
 					moves.add(new Piece(temp.getColor(), p_row+1*direction, p_col+1));
@@ -377,6 +388,56 @@ public class Board {
 	}
 	
 	/**
+	 * Returns jumps if available, otherwise, returns all available moves.
+	 * @param color
+	 * @return
+	 * @throws Exception
+	 */
+	/*public ArrayList<Board> finalMoves(char color) throws Exception
+	{
+		ArrayList<Board> result = new ArrayList<Board>();
+		ArrayList<Piece> moves = allJumps(color);
+		if(moves.size() != 0)
+		{
+			for(Piece move : moves)
+			{
+				ArrayList<Piece> jumps = validJumps(move);
+				for(Piece jump : jumps)
+				{
+					Board temp = new Board(this);
+					boolean cont = true;
+					while(cont == true)
+					{
+						cont = temp.makeMove(move, jump);
+						result.add(temp);
+						
+					}
+				}
+			}
+			return result;
+		}
+
+		for(int i = 0; i < row; i++)
+		{
+			for(int j = 0; j < col; j++)
+			{
+				Piece p = board.get(i).get(j);
+				if(p.getColor() != '-')
+				{
+					moves = validMoves(p);
+					for(Piece move : moves)
+					{
+						Board temp = new Board(this);
+						temp.makeMove(p, move);
+						result.add(temp);
+					}
+				}
+			}
+		}
+		return result;
+	}*/
+	
+	/**
 	 * Returns all pieces available to jump
 	 * @param color
 	 * @return
@@ -386,12 +447,12 @@ public class Board {
 	{
 		ArrayList<Piece> result = new ArrayList<Piece>();
 
-		for(int i = 0; i < 8; i++)
+		for(int i = 0; i < row; i++)
 		{
-			for(int j = 0; j < 8; j++)
+			for(int j = 0; j < col; j++)
 			{
 				Piece p = board.get(i).get(j);
-				if(p.getColor() != '-')
+				if(p.getColor() != '-' && p.getColor() == color)
 				{
 					ArrayList<Piece> moves = validMoves(p);
 					if(moves.size() != 0)

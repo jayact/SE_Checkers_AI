@@ -40,7 +40,7 @@ public class Node {
      */
     public void createChildren(char color) throws Exception
     {
-        ArrayList<Piece> moveable = parent.getCurrent().allJumps(color);
+        ArrayList<Piece> moveable = current.allJumps(color);
         if(moveable.size() != 0)
         {
             for(Piece move : moveable)
@@ -54,14 +54,15 @@ public class Node {
         }
         else
         {
-            moveable = parent.getCurrent().allMoves(color);
+            moveable = current.allMoves(color);
             for(Piece move : moveable)
             {
-                ArrayList<Piece> move_list= parent.getCurrent().validMoves(move);
+                ArrayList<Piece> move_list= current.validMoves(move);
                 for(Piece move_to : move_list)
                 {
-                    Board temp = new Board(parent.getCurrent());
+                    Board temp = new Board(current);
                     temp.makeMove(move, move_to);
+                    children.add(new Node(this, temp));
                 }
             }
         }
@@ -70,10 +71,10 @@ public class Node {
     private ArrayList<Board> childrenHelper(Piece move) throws Exception
     {
         ArrayList<Board> result = new ArrayList<Board>();
-        ArrayList<Piece> move_list = parent.getCurrent().validJumps(move);
+        ArrayList<Piece> move_list = current.validJumps(move);
         for(Piece move_to : move_list)
         {
-            Board temp = new Board(parent.getCurrent());
+            Board temp = new Board(current);
             boolean remain = temp.makeMove(move, move_to);
             result.add(temp);
             ArrayList<Board> future_list;
@@ -141,14 +142,14 @@ public class Node {
         {
             int kingVal = 2;
             int result = 0;
-            int[][] posVals = {{2,2,2,2,2,2,2,2},
-                               {2,1,1,1,1,1,1,2},
-                               {2,1,1,1,1,1,1,2},
-                               {2,1,1,1,1,1,1,2},
-                               {2,1,1,1,1,1,1,2},
-                               {2,1,1,1,1,1,1,2},
-                               {2,1,1,1,1,1,1,2},
-                               {2,2,2,2,2,2,2,2}};
+            int[][] posVals = {{4,3,3,3,3,3,3,4},
+                               {4,1,2,2,2,2,1,4},
+                               {4,1,2,2,2,2,1,4},
+                               {4,1,2,2,2,2,1,4},
+                               {4,1,2,2,2,2,1,4},
+                               {4,1,2,2,2,2,1,4},
+                               {4,1,2,2,2,2,1,4},
+                               {4,1,2,2,2,2,1,4}};
             
             for(int i=0; i<8; i++)
             {

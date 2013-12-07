@@ -1,4 +1,4 @@
-package checkers.checkers;
+package checkers;
 
 public abstract class Player 
 {

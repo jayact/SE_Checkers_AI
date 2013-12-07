@@ -21,7 +21,6 @@ public abstract class Algorithm
      */
         public Algorithm()//Board b, char piece)
         {
-            
         }
         
         
