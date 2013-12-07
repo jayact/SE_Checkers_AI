@@ -1,6 +1,8 @@
 package checkers;
 
 import Algorithms.MiniMax;
+import Algorithms.MiniMaxAlphaBeta;
+import Algorithms.NegaScout;
 
 public class Game 
 {
@@ -46,9 +48,10 @@ public class Game
 	 */
 	public static void startGame() throws Exception
 	{
-		setP1(new AI('B', new MiniMax()));
+		setP1(new AI('B', new MiniMaxAlphaBeta()));
                 //setP1(new User('B'));
-		setP2(new User('R'));
+                setP2(new AI('R', new NegaScout()));
+		//setP2(new User('R'));
 		setGUI(new TextGUI());
 		board = new Board();
 		runGame();

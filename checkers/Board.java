@@ -2,7 +2,7 @@ package checkers;
 import java.util.ArrayList;
 
 
-public class Board {
+public class Board{
 	//private Piece[][] board;
 	private int b_units;
 	private int r_units;
@@ -32,6 +32,8 @@ public class Board {
         b_units = board.bUnits();
         r_units = board.rUnits();
     }
+        
+
 	
 	/**
 	 * sets the board up in the standard configuration
@@ -462,4 +464,6 @@ public class Board {
 		}
 		return result;
 	}
+
+    
 }

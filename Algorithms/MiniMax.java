@@ -105,7 +105,5 @@ public class MiniMax extends checkers.Algorithm{
             }
             return minNode;
         }
-        
-    }
-    
+    }  
 }

@@ -1,5 +1,9 @@
 package checkers;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.lang.Thread;
+
 public class AI  extends Player{
 	private Algorithm algo;
 	
@@ -25,7 +29,11 @@ public class AI  extends Player{
 	 */
     @Override
 	public Board takeTurn(Board b, GUI gui) {
-		// TODO Auto-generated method stub
+        try {
+            Thread.currentThread().sleep(2000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(AI.class.getName()).log(Level.SEVERE, null, ex);
+        }
 		return algo.getMove(b, piece);
 	}
 	

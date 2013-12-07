@@ -14,7 +14,7 @@ import java.util.LinkedList;
  *
  * @author Jack
  */
-public class Node {
+public class Node implements Comparable{
     Node parent;
     Board current;
     LinkedList<Node> children = new LinkedList<>();
@@ -30,6 +30,17 @@ public class Node {
     {
         this.parent = parent;
         this.current = current;
+    }
+    
+    public Node()
+    {
+        
+    }
+    
+    public void sortChildren()
+    {
+        QuickSort q = new QuickSort();
+        q.sort(children);
     }
     
     /**
@@ -76,7 +87,7 @@ public class Node {
         {
             Board temp = new Board(current);
             boolean remain = temp.makeMove(move, move_to);
-            result.add(temp);
+            //result.add(temp);
             ArrayList<Board> future_list;
             if(remain == true)
             {
@@ -85,6 +96,10 @@ public class Node {
                 {
                     result.add(future);
                 }
+            }
+            else
+            {
+                result.add(temp);
             }
         }
         return result;
@@ -205,5 +220,32 @@ public class Node {
     {
         return rating;
     }
-    
+
+//    @Override
+//    public int compareTo(Object o)
+//    {
+//        if(!this.getClass().equals(o.getClass()))
+//            return -2;
+//        Node n = (Node)o;
+//        if(n.getRating() > this.rating)
+//        {
+//            return 1;
+//        }else if(n.getRating() == this.rating)
+//        {
+//            return 0;
+//        }else
+//            return -1;
+//    } 
+
+    @Override
+    public int compareTo(Object o) 
+    {
+        Node n = (Node)o;
+        if(this.getRating() < n.getRating())
+            return -1;
+        else if(this.getRating() > n.getRating())
+            return 1;
+        else 
+            return 0;
+    }
 }
