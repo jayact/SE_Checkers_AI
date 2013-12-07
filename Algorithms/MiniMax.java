@@ -14,22 +14,22 @@ import checkers.SolutionSpace;
  */
 public class MiniMax extends checkers.Algorithm{
     
-    public MiniMax(Board b, char piece)
+    public MiniMax()
     {
-        super();//b, piece);
+        super();
     }
 
     @Override
     public Board getMove(Board b, char piece) 
     {
-        tree = new SolutionSpace(b, piece);
-        plyDepth = tree.getPlyDepth();
-        root = tree.getRoot();
         max = piece;
         if(piece == 'R')
             min = 'B';
         else
             min = 'R';
+        tree = new SolutionSpace(b, max);
+        plyDepth = tree.getPlyDepth();
+        root = tree.getRoot();
         return maximize(root, max, plyDepth).getCurrent();
     }
     
@@ -38,7 +38,7 @@ public class MiniMax extends checkers.Algorithm{
         if(depth == 1)
         {
             int maxRating = 0;
-            Node maxNode = null;
+            Node maxNode = current;
             for(Node n: current.getChildren())
             {
                 n.rateBoard(piece);
@@ -54,10 +54,11 @@ public class MiniMax extends checkers.Algorithm{
         else
         {
             int maxRating = Integer.MIN_VALUE;
-            Node maxNode = null;
+            Node maxNode = current;
             for(Node n: current.getChildren())
             {
                 Node temp = minimize(n, min, depth-1);
+                temp.rateBoard(piece);
                 int tempRating = temp.getRating();
                 if(tempRating > maxRating)
                 {
@@ -74,7 +75,7 @@ public class MiniMax extends checkers.Algorithm{
         if(depth == 1)
         {
             int minRating = Integer.MAX_VALUE;
-            Node minNode = null;
+            Node minNode = current;
             for(Node n: current.getChildren())
             {
                 n.rateBoard(piece);
@@ -90,10 +91,11 @@ public class MiniMax extends checkers.Algorithm{
         else
         {
             int minRating = Integer.MAX_VALUE;
-            Node minNode = null;
+            Node minNode = current;
             for(Node n: current.getChildren())
             {
                 Node temp = maximize(n, min, depth-1);
+                temp.rateBoard(piece);
                 int tempRating = temp.getRating();
                 if(tempRating < minRating)
                 {
