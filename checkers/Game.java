@@ -16,7 +16,10 @@ public class Game {
     
     public static void main(String[] args) throws Exception {
         try {
-            new StartupGUI().setVisible(true);
+        	StartupGUI q = new StartupGUI();
+        	q.setVisible(true);
+            Player[] players = q.getPlayers();
+            startGame(players[0], players[1]);
         } catch (NullPointerException ex) {
             System.out.println("Victory in " + SolutionSpace.plyDepth + " moves!!");
         } catch (Exception ex) {
@@ -83,7 +86,8 @@ public class Game {
         p2Stop = new Stopwatch();
         board = new Board();
         gui = new BoardGUI();
-        gui.setVisible(true);
+
+        gui.display(board);
         runGame();
     }
 
@@ -114,12 +118,12 @@ public class Game {
             gui.display(board);
             try {
                 //do what you want to do before sleeping
-                Thread.currentThread().sleep(1000);//sleep for 1000 ms
+                Thread.currentThread().sleep(2000);//sleep for 1000 ms
                 //do what you want to do after sleeptig
             } catch (InterruptedException ie) {
                 //If this thread was intrrupted by nother thread
             }
-            //  System.out.println();
+              System.out.println();
         }
     }
 }

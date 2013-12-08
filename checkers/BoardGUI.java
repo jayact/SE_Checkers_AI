@@ -15,8 +15,9 @@ import javax.swing.JLabel;
  * @author mcginl04
  */
 public class BoardGUI extends javax.swing.JFrame implements GUI{
-    private static final String root = "C:\\Users\\Joe\\Documents\\NetBeansProjects\\checkers\\src\\checkers\\";
-    private static final ImageIcon EMPTY = new ImageIcon(root +"empty.gif");
+   // private static final String root = "C:\\Users\\Joe\\Documents\\NetBeansProjects\\checkers\\src\\checkers\\";
+    private static final String root = "/home/jayact/workspace/Senior project/src/checkers/";
+	private static final ImageIcon EMPTY = new ImageIcon(root +"empty.gif");
     private static final ImageIcon EMPTY_HIGHLIGHT = new ImageIcon(root +"emptyLighted.gif");
     private static final ImageIcon BLACK = new ImageIcon(root +"black.gif");
     private static final ImageIcon BLACK_HIGHLIGHT = new ImageIcon(root +"blackLighted.gif");
@@ -139,7 +140,7 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
                     boardPanel.add(new JLabel(EMPTY));
             }
         }
-        repaint();
+        pack();
     }
     private void onClicked(java.awt.event.MouseEvent evt) {                           
         int row = (evt.getY()/BLACK.getIconHeight());
@@ -169,14 +170,14 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+   /* public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
                 new BoardGUI();
             }
         });
-    }
+    }*/
     // Variables declaration - do not modify                     
     private javax.swing.JPanel boardPanel;
     private javax.swing.JMenuItem closeItem;

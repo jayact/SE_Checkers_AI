@@ -11,6 +11,25 @@ import Algorithms.*;
  */
 public class StartupGUI extends javax.swing.JFrame {
 
+    private static boolean finishSelection = false;
+    private static Player p1;
+    private static Player p2;
+    
+    public Player[] getPlayers()
+    {
+    	while(finishSelection == false)
+    	{
+    		 try {
+                 //do what you want to do before sleeping
+                 Thread.currentThread().sleep(1000);//sleep for 1000 ms
+                 //do what you want to do after sleeptig
+             } catch (InterruptedException ie) {
+                 //If this thread was intrrupted by nother thread
+             }
+    	}
+    	return new Player[]{p1, p2};
+    }
+    
     /** Creates new form GUI */
     public StartupGUI() {
         initComponents();
@@ -80,11 +99,13 @@ public class StartupGUI extends javax.swing.JFrame {
     }// </editor-fold>                        
 
     private void matchStartupActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        String p1 = (String) firstPlayer.getSelectedItem();
-        String p2 = (String) secondPlayer.getSelectedItem();
-        System.out.print(p1 + "" + p2);
-        Game.startGame(determinePlayer(p1, 'B'), determinePlayer(p2, 'R'));
+        String p1_str = (String) firstPlayer.getSelectedItem();
+        String p2_str = (String) secondPlayer.getSelectedItem();
+        System.out.print(p1 + "\n" + p2);
         setVisible(false);
+        p1 = determinePlayer(p1_str, 'B');
+        p2 = determinePlayer(p2_str, 'R');
+        finishSelection = true;
     }                                            
 
     private Player determinePlayer(String player, char piece) {
