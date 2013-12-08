@@ -5,6 +5,7 @@ import Algorithms.MiniMaxAlphaBeta;
 import Algorithms.NegaScout;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 public class Game {
 
     private static Stopwatch p1Stop;
@@ -12,12 +13,12 @@ public class Game {
     private static Player p1;
     private static Player p2;
     private static Board board;
-    private static BoardGUI gui;
-    
+    private static GUI gui;
+
     public static void main(String[] args) throws Exception {
         try {
-        	StartupGUI q = new StartupGUI();
-        	q.setVisible(true);
+            StartupGUI q = new StartupGUI();
+            q.setVisible(true);
             Player[] players = q.getPlayers();
             startGame(players[0], players[1]);
         } catch (NullPointerException ex) {
@@ -26,12 +27,12 @@ public class Game {
             Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public static void timeStuff() {
-            System.out.println("P1: Total time = " + p1Stop.total());
-            System.out.println("P1: Average time = " + p1Stop.average());
-            System.out.println("P2: Total time = " + p2Stop.total());
-            System.out.println("P2: Average time = " + p2Stop.average());
+        System.out.println("P1: Total time = " + p1Stop.total());
+        System.out.println("P1: Average time = " + p1Stop.average());
+        System.out.println("P2: Total time = " + p2Stop.total());
+        System.out.println("P2: Average time = " + p2Stop.average());
     }
 
     /**
@@ -78,7 +79,7 @@ public class Game {
         board = new Board();
         runGame();
     }
-    
+
     public static void startGame(Player p1, Player p2) {
         setP1(p1);
         p1Stop = new Stopwatch();
@@ -101,14 +102,14 @@ public class Game {
         while (board.victory() == false) {
             try {
                 if (count % 2 == 0) {
-                p1Stop.start();
-                board = p1.takeTurn(board, gui);
-                System.out.println("Player 1 took: " + p1Stop.end() + "milliseconds");
+                    p1Stop.start();
+                    board = p1.takeTurn(board, gui);
+                    System.out.println("Player 1 took: " + p1Stop.end() + " milliseconds");
                 } else {
-                p2Stop.start();
-                board = p2.takeTurn(board, gui);
-                p2Stop.end();
-                System.out.println("Player 2 took: " + p2Stop.end() + " milliseconds");
+                    p2Stop.start();
+                    board = p2.takeTurn(board, gui);
+                    p2Stop.end();
+                    System.out.println("Player 2 took: " + p2Stop.end() + " milliseconds");
                 }
             } catch (Exception e) {
                 System.out.println("Error encountered: " + e.getMessage());
@@ -123,7 +124,7 @@ public class Game {
             } catch (InterruptedException ie) {
                 //If this thread was intrrupted by nother thread
             }
-              System.out.println();
+            System.out.println();
         }
     }
 }
