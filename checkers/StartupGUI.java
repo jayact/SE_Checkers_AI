@@ -63,7 +63,7 @@ public class StartupGUI extends javax.swing.JFrame {
 
         firstPlayer.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Human Player", "Minimax (AI)", "Minimax with alphabeta (AI)", "Negamax (AI)", "Negascout (AI)", "A* (AI)", "Expectiminimax (AI)" }));
 
-        secondPlayer.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Human Player", "Minimax (AI)", "Minimax alphabeta (AI)", "Negamax (AI)", "Negascout (AI)", "A* (AI)", "Expectiminimax (AI)" }));
+        secondPlayer.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Human Player", "Minimax (AI)", "Minimax with alphabeta (AI)", "Negamax (AI)", "Negascout (AI)", "A* (AI)", "Expectiminimax (AI)" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -114,7 +114,7 @@ public class StartupGUI extends javax.swing.JFrame {
                 break;
             case "Minimax (AI)": p = new AI(piece, new MiniMax());
                 break;
-            case "Minimax with aplhabeta (AI)": p = new AI(piece, new MiniMaxAlphaBeta());
+            case "Minimax with alphabeta (AI)": p = new AI(piece, new MiniMaxAlphaBeta());
                 break;
             case "Negascout (AI)": p = new AI(piece, new NegaScout());
                 break;
