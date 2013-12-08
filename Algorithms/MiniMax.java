@@ -8,6 +8,7 @@ import checkers.Board;
 import checkers.Node;
 import checkers.SolutionSpace;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Random;
 
 /**
@@ -58,7 +59,8 @@ public class MiniMax extends checkers.Algorithm{
         {
             int maxRating = Integer.MIN_VALUE;
             ArrayList<Node> maxNode = new ArrayList<>();
-            for(Node n: current.getChildren())
+            LinkedList<Node> children = current.getChildren();
+            for(Node n: children)
             {
                 Node temp = minimize(n, min, depth-1);
                 temp.rateBoard(piece);
@@ -103,7 +105,8 @@ public class MiniMax extends checkers.Algorithm{
         {
             int minRating = Integer.MAX_VALUE;
             ArrayList<Node> minNode = new ArrayList<>();
-            for(Node n: current.getChildren())
+            LinkedList<Node> children = current.getChildren();
+            for(Node n: children)
             {
                 Node temp = maximize(n, min, depth-1);
                 temp.rateBoard(piece);
