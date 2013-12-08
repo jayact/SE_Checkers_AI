@@ -61,9 +61,9 @@ public class StartupGUI extends javax.swing.JFrame {
 
         titleLabel.setText("Checkers Setup");
 
-        firstPlayer.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Human Player", "Minimax (AI)", "Minimax w/ alpha-beta pruning (AI)", "Negamax (AI)", "Negascout (AI)", "A* (AI)", "Expectiminimax (AI)" }));
+        firstPlayer.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Human Player", "Minimax (AI)", "Minimax with alphabeta (AI)", "Negamax (AI)", "Negascout (AI)", "A* (AI)", "Expectiminimax (AI)" }));
 
-        secondPlayer.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Human Player", "Minimax (AI)", "Minimax w/ alpha-beta pruning (AI)", "Negamax (AI)", "Negascout (AI)", "A* (AI)", "Expectiminimax (AI)" }));
+        secondPlayer.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Human Player", "Minimax (AI)", "Minimax alphabeta (AI)", "Negamax (AI)", "Negascout (AI)", "A* (AI)", "Expectiminimax (AI)" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -101,7 +101,6 @@ public class StartupGUI extends javax.swing.JFrame {
     private void matchStartupActionPerformed(java.awt.event.ActionEvent evt) {                                             
         String p1_str = (String) firstPlayer.getSelectedItem();
         String p2_str = (String) secondPlayer.getSelectedItem();
-        System.out.print(p1 + "\n" + p2);
         setVisible(false);
         p1 = determinePlayer(p1_str, 'B');
         p2 = determinePlayer(p2_str, 'R');
@@ -115,7 +114,7 @@ public class StartupGUI extends javax.swing.JFrame {
                 break;
             case "Minimax (AI)": p = new AI(piece, new MiniMax());
                 break;
-            case "Minimax w/ aplha-beta pruning (AI)": p = new AI(piece, new MiniMaxAlphaBeta());
+            case "Minimax with aplhabeta (AI)": p = new AI(piece, new MiniMaxAlphaBeta());
                 break;
             case "Negascout (AI)": p = new AI(piece, new NegaScout());
                 break;
