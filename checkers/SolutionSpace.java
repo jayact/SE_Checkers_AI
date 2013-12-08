@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  */
 public class SolutionSpace {
     Node root;
-    int plyDepth = 5;      
+    static int plyDepth = 5;      
     //decrease to increase speed
     //increase to increase skill level
     
@@ -50,6 +50,8 @@ public class SolutionSpace {
             other = 'B';
 
         if(count==0)
+            return;
+        if(current.getCurrent().victory())
             return;
         current.createChildren(piece);
         for(int i=0; i<current.children.size(); i++)

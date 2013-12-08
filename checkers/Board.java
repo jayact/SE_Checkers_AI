@@ -7,8 +7,8 @@ public class Board{
 	private int b_units;
 	private int r_units;
 	ArrayList<ArrayList<Piece>> board;
-	private int row = 8;
-	private int col = 8;
+//	private int row = 8;
+//	private int col = 8;
 	
 	public Board()
 	{
@@ -186,7 +186,7 @@ public class Board{
 			}
 			if(p_col < 7)
 			{
-				Piece temp = board.get(row+1*direction).get(p_col+1);
+				Piece temp = board.get(p_row+1*direction).get(p_col+1);
 				if(temp.getColor() == '-')
 				{
 					moves.add(new Piece(temp.getColor(), p_row+1*direction, p_col+1));
@@ -449,9 +449,9 @@ public class Board{
 	{
 		ArrayList<Piece> result = new ArrayList<Piece>();
 
-		for(int i = 0; i < row; i++)
+		for(int i = 0; i < 8; i++)
 		{
-			for(int j = 0; j < col; j++)
+			for(int j = 0; j < 8; j++)
 			{
 				Piece p = board.get(i).get(j);
 				if(p.getColor() != '-' && p.getColor() == color)
