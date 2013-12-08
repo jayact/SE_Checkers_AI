@@ -15,9 +15,9 @@ import javax.swing.JLabel;
  * @author mcginl04
  */
 public class BoardGUI extends javax.swing.JFrame implements GUI{
-   // private static final String root = "C:\\Users\\Joe\\Documents\\NetBeansProjects\\checkers\\src\\checkers\\";
-    private static final String root = "/home/jayact/workspace/Senior project/src/checkers/";
-	private static final ImageIcon EMPTY = new ImageIcon(root +"empty.gif");
+    private static final String root = "C:\\Users\\Joe\\Documents\\NetBeansProjects\\checkers\\src\\checkers\\";
+    //private static final String root = "/home/jayact/workspace/Senior project/src/checkers/";
+    private static final ImageIcon EMPTY = new ImageIcon(root +"empty.gif");
     private static final ImageIcon EMPTY_HIGHLIGHT = new ImageIcon(root +"emptyLighted.gif");
     private static final ImageIcon BLACK = new ImageIcon(root +"black.gif");
     private static final ImageIcon BLACK_HIGHLIGHT = new ImageIcon(root +"blackLighted.gif");
@@ -29,7 +29,9 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
     private static final ImageIcon RED_KING_HIGHLIGHT = new ImageIcon(root +"redKingLighted.gif");
     
     private Board b; //update board after move
-    private boolean pieceSelected = false;
+    private boolean isPieceSelected = false;
+    private char playersTurn = 'b';
+    private Piece selectedPiece;
 
     /** Creates new form BoardGUI */
     public BoardGUI() {
@@ -48,7 +50,8 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
-        logField = new javax.swing.JTextField();
+        logField = new javax.swing.JTextArea();
+        jScrollPane1 = new javax.swing.JScrollPane();
         boardPanel = new javax.swing.JPanel();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
@@ -93,19 +96,20 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
         menuBar.add(helpMenu);
 
         setJMenuBar(menuBar);
+        jScrollPane1.setViewportView(logField);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(logField, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(boardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(logField, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
             .addComponent(boardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -149,24 +153,15 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
             row = 7;
         if(col > 7)
             col = 7;
-        System.out.println(row + " " + col);
         Piece p = b.getPiece(row,col);
-        if(pieceSelected == false)
-            selectPiece(p);
-        else
-            selectMove(p);
-        display(b);
-    }                          
-
-    private void selectPiece(Piece p) {
-        if(p.getColor() != 'r')
-            return;
-        pieceSelected = true;
-    }
+        isPieceSelected = true;
+        selectedPiece = p;
+    }                      
     
-    private void selectMove(Piece p) {
-        
+    public void append(String s) {
+        logField.append(s);
     }
+
     /**
      * @param args the command line arguments
      */
@@ -180,11 +175,12 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
     }*/
     // Variables declaration - do not modify                     
     private javax.swing.JPanel boardPanel;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenuItem closeItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JMenuItem loadItem;
-    private javax.swing.JTextField logField;
+    private javax.swing.JTextArea logField;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem saveItem;
     private javax.swing.JMenu viewMenu;
@@ -253,27 +249,80 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
 
     @Override
     public Piece getMove(Board b, char piece) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-    
-    public Piece getMove(Board b, char piece, int[] pos) throws Exception {
-        this.b = b;
-        
-        if (b.getPiece(pos[0], pos[1]).getColor() != piece) {
-            System.out.println("This is not a valid choice.");
-        } else {
-            //valid = true;
+        int[] pos = new int[2];
+        boolean valid = false;
+        while (valid == false) {
+            while (playersTurn != piece && isPieceSelected == false) {
+                try {
+                    //do what you want to do before sleeping
+                    Thread.currentThread().sleep(1000);//sleep for 1000 ms
+                    //do what you want to do after sleeptig
+                } catch (InterruptedException ie) {
+                    //If this thread was intrrupted by nother thread
+                }
+            }
+            this.b = b;
+            pos = selectedPiece.getPosition();
+
+            if (b.getPiece(pos[0], pos[1]).getColor() != piece || b.validMoves(b.getPiece(pos[0], pos[1])).isEmpty()) {
+                logField.append("This is not a valid \nchoice.\n");
+                isPieceSelected = false;
+            } else {
+                valid = true;
+            }
         }
+        if(playersTurn == 'B')
+            playersTurn = 'R';
+        else if(playersTurn == 'R')
+            playersTurn = 'B';
+        isPieceSelected = false;
+        return b.getPiece(pos[0], pos[1]);
+    }
+
+    //@Override
+    public Piece getMove(Board b, ArrayList<Piece> moves, char piece) throws IOException {
+        int[] pos = new int[2];
+        boolean  valid = false;
+        while (valid == false) {
+            while (playersTurn != piece && isPieceSelected == false) {
+                try {
+                    //do what you want to do before sleeping
+                    Thread.currentThread().sleep(1000);//sleep for 1000 ms
+                    //do what you want to do after sleeptig
+                } catch (InterruptedException ie) {
+                    //If this thread was intrrupted by nother thread
+                }
+            }
+            this.b = b;
+            pos = selectedPiece.getPosition();
+
+            if(b.getPiece(pos[0], pos[1]).getColor() == piece)
+			{
+				for(Piece move : moves)
+				{
+					if(move.equals(b.getPiece(pos[0], pos[1])))
+					{
+						valid = true;
+					}
+				}
+			}
+			if(valid == false)
+			{
+				logField.append("This is not a valid \nchoice.\n");
+                                isPieceSelected = false;
+			}
+        }
+        if(playersTurn == 'B')
+            playersTurn = 'R';
+        else if(playersTurn == 'R')
+            playersTurn = 'B';
+        isPieceSelected = false;
         return b.getPiece(pos[0], pos[1]);
     }
 
     @Override
-    public Piece getMove(Board b, ArrayList<Piece> moves, char piece) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
     public void help() {
-        System.out.println("I hate you");
+        logField.append("Welcome to checkers! Here are the instructions: \n");
+        logField.append("To select a piece or move, enter it as follows: row, col. Substitute row and col for the selected values\n");
     }
 }
