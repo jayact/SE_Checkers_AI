@@ -7,6 +7,8 @@ package Algorithms;
 import checkers.Board;
 import checkers.Node;
 import checkers.SolutionSpace;
+import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *
@@ -30,68 +32,77 @@ public class MiniMax extends checkers.Algorithm{
         tree = new SolutionSpace(b, max);
         plyDepth = tree.getPlyDepth();
         root = tree.getRoot();
-        return maximize(root, max, plyDepth).getCurrent();
+        Board move = maximize(root, max, plyDepth).getCurrent();
+        return move;
     }
     
     private Node maximize(Node current, char piece, int depth)
     {
-        if(depth == 1)
+        if(depth == 0)
         {
-            int maxRating = 0;
-            Node maxNode = current;
-            for(Node n: current.getChildren())
-            {
-                n.rateBoard(piece);
-                if(n.getRating() > maxRating)
-                {
-                    maxRating = n.getRating();
-                    maxNode = n;
-                }
-            }
-            current.setRating(maxRating);
-            return maxNode;
+//            int maxRating = 0;
+//            Node maxNode = current;
+//            for(Node n: current.getChildren())
+//            {
+//                n.rateBoard(piece);
+//                if(n.getRating() > maxRating)
+//                {
+//                    maxRating = n.getRating();
+//                    maxNode = n;
+//                }
+//            }
+//            current.setRating(maxRating);
+            return current;
         }
         else
         {
             int maxRating = Integer.MIN_VALUE;
-            Node maxNode = current;
+            ArrayList<Node> maxNode = new ArrayList<>();
             for(Node n: current.getChildren())
             {
                 Node temp = minimize(n, min, depth-1);
                 temp.rateBoard(piece);
                 int tempRating = temp.getRating();
-                if(tempRating > maxRating)
+                if(tempRating == maxRating)
+                {
+                    
+                }
+                else if(tempRating > maxRating)
                 {
                     maxRating = tempRating;
-                    maxNode = n;
+                    maxNode.add(n);
                 }
+                
             }
-            return maxNode;
+            if(maxNode.size() == 0)
+                return current;
+            Random r = new Random();
+            return maxNode.get(r.nextInt(maxNode.size()));
         }
     }
     
     private Node minimize(Node current, char piece, int depth)
     {
-        if(depth == 1)
+        if(depth == 0)
         {
-            int minRating = Integer.MAX_VALUE;
-            Node minNode = current;
-            for(Node n: current.getChildren())
-            {
-                n.rateBoard(piece);
-                if(n.getRating() < minRating)
-                {
-                    minRating = n.getRating();
-                    minNode = n;
-                }
-            }
-            current.setRating(minRating);
-            return minNode;
+//            int minRating = Integer.MAX_VALUE;
+//            Node minNode = current;
+//            for(Node n: current.getChildren())
+//            {
+//                n.rateBoard(piece);
+//                if(n.getRating() < minRating)
+//                {
+//                    minRating = n.getRating();
+//                    minNode = n;
+//                }
+//            }
+//            current.setRating(minRating);
+            return current;
         }
         else
         {
             int minRating = Integer.MAX_VALUE;
-            Node minNode = current;
+            ArrayList<Node> minNode = new ArrayList<>();
             for(Node n: current.getChildren())
             {
                 Node temp = maximize(n, min, depth-1);
@@ -100,10 +111,13 @@ public class MiniMax extends checkers.Algorithm{
                 if(tempRating < minRating)
                 {
                     minRating = tempRating;
-                    minNode = n;
+                    minNode.add(n);
                 }
             }
-            return minNode;
+            if(minNode.size() == 0)
+                return current;
+            Random r = new Random();
+            return minNode.get(r.nextInt(minNode.size()));
         }
     }  
 }
