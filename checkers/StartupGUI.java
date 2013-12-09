@@ -65,9 +65,9 @@ public class StartupGUI extends javax.swing.JFrame {
 
         titleLabel.setText("Checkers Setup");
 
-        firstPlayer.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Human Player", "Minimax (AI)", "Minimax with alphabeta (AI)", "Negamax (AI)", "Negascout (AI)", "A* (AI)", "Expectiminimax (AI)" }));
+        firstPlayer.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Human Player", "Minimax (AI)", "Minimax with alphabeta (AI)", "Negamax (AI)", "Negascout (AI)"}));
 
-        secondPlayer.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Human Player", "Minimax (AI)", "Minimax with alphabeta (AI)", "Negamax (AI)", "Negascout (AI)", "A* (AI)", "Expectiminimax (AI)" }));
+        secondPlayer.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Human Player", "Minimax (AI)", "Minimax with alphabeta (AI)", "Negamax (AI)", "Negascout (AI)"}));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -131,7 +131,7 @@ public class StartupGUI extends javax.swing.JFrame {
                 break;
             case "Negascout (AI)": p = new AI(piece, new NegaScout());
                 break;
-            //case "Negamax (AI)": p = new AI(piece, new NegaMax());
+            case "Negamax (AI)": p = new AI(piece, new NegaMax());
             //case "A* (AI)": p = new AI(piece, new A());
             //case "Expectiminimax (AI)": new AI(piece, new ExpectiMiniMax());
             default: p = new User(piece);
