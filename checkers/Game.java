@@ -1,11 +1,14 @@
 package checkers;
 
-import Algorithms.MiniMax;
-import Algorithms.MiniMaxAlphaBeta;
-import Algorithms.NegaScout;
+import Algorithms.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * This class manages the game's runtime.
+ * @author jayact
+ *
+ */
 public class Game {
 
     private static Stopwatch p1Stop;
@@ -80,7 +83,7 @@ public class Game {
         runGame();
     }
 
-    /*
+    /**
      * Sets up the game using the two players provided by creating the BoardGUI
      * and calling runGame
      * 
@@ -102,7 +105,6 @@ public class Game {
     /**
      * Runs the game until a winner is declared.
      *
-     * @throws Exception
      */
     public static void runGame() {
         gui.help();

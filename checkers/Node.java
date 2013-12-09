@@ -4,7 +4,7 @@ package checkers;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-/*
+/**
  * Creates a node object to hold the structure of the solution space.  Capable 
  * of generating the children of its current board for all posible moves of 
  * player the player specified by piece
@@ -38,13 +38,16 @@ public class Node implements Comparable{
         
     }
     
+    /**
+     * Calls the sorting method to sort the children
+     */
     public void sortChildren()
     {
         q.sort(children);
     }
     
     /**
-     * Creates all possible moves from the current board and their cooresponding
+     * Creates all possible moves from the current board and their corresponding
      * Node object with the current position as the parent
      * @param piece specifies player that can make the move
      * @throws Exception 
@@ -52,18 +55,18 @@ public class Node implements Comparable{
     public void createChildren(char color) throws Exception
     {
         ArrayList<Piece> moveable = current.allJumps(color);
-        if(moveable.size() != 0)
+        if(moveable.size() != 0) //if it's a jump, take it. find the final states and return it.
         {
             for(Piece move : moveable)
             {
-                ArrayList<Board> temp = childrenHelper(move);
+                ArrayList<Board> temp = childrenHelper(current, move);
                 for(Board t : temp)
                 {
                     children.add(new Node(this, t));
                 }
             }
         }
-        else
+        else //else, make the moves and return it.
         {
             moveable = current.allMoves(color);
             for(Piece move : moveable)
@@ -79,23 +82,30 @@ public class Node implements Comparable{
         }
     }
    
-    private ArrayList<Board> childrenHelper(Piece move) throws Exception
+    /**
+     * This specifically gets the jumps, and recursive jumps.
+     * @param move is the piece to move
+     * @return the final jump states
+     * @throws Exception
+     */
+    private ArrayList<Board> childrenHelper(Board b, Piece move) throws Exception
     {
         ArrayList<Board> result = new ArrayList<Board>();
-        ArrayList<Piece> move_list = current.validJumps(move);
+        ArrayList<Piece> move_list = b.validJumps(move);
         for(Piece move_to : move_list)
         {
-            Board temp = new Board(current);
+            Board temp = new Board(b);
             boolean remain = temp.makeMove(move, move_to);
-            //result.add(temp);
-            ArrayList<Board> future_list;
+           // result.add(temp);
             if(remain == true)
             {
-                future_list = childrenHelper(move_to);
+                ArrayList<Board> future_list = childrenHelper(temp, temp.getPiece(move_to.getPosition()[0], move_to.getPosition()[1]));
                 for(Board future : future_list)
                 {
                     result.add(future);
                 }
+                if(future_list.size() == 0)
+                	result.add(temp);
             }
             else
             {
@@ -226,22 +236,6 @@ public class Node implements Comparable{
     {
         return rating;
     }
-
-//    @Override
-//    public int compareTo(Object o)
-//    {
-//        if(!this.getClass().equals(o.getClass()))
-//            return -2;
-//        Node n = (Node)o;
-//        if(n.getRating() > this.rating)
-//        {
-//            return 1;
-//        }else if(n.getRating() == this.rating)
-//        {
-//            return 0;
-//        }else
-//            return -1;
-//    } 
 
     @Override
     public int compareTo(Object o) 

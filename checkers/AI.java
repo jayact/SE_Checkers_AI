@@ -1,9 +1,10 @@
 package checkers;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.lang.Thread;
-
+/**
+ * Represents the individual AIs. Uses an algorithm to obtain the move.
+ * @author jayact
+ *
+ */
 public class AI extends Player {
 
     private Algorithm algo;
@@ -27,11 +28,6 @@ public class AI extends Player {
      */
     @Override
     public Board takeTurn(Board b, GUI gui) {
-//        try {
-//            Thread.currentThread().sleep(2000);
-//        } catch (InterruptedException ex) {
-//            Logger.getLogger(AI.class.getName()).log(Level.SEVERE, null, ex);
-//        }
         return algo.getMove(b, piece);
     }
 }

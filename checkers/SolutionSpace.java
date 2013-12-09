@@ -12,7 +12,9 @@ import java.util.logging.Logger;
  */
 
 /**
- *
+ * The purpose is to have a convenient way to search through
+ * all of the possible moves. children generated alternates,
+ * for minimax purposes.
  * @author Jack
  */
 public class SolutionSpace {
@@ -25,27 +27,32 @@ public class SolutionSpace {
      * Creates an instance of a SolutionSpace from board b, with the first 
      * player to move piece
      * @param b initial board state
-     * @param piece player to move first
+     * @param color player to move first
      */
-    public SolutionSpace(Board b, char piece)
+    public SolutionSpace(Board b, char color)
     {
         root = new Node(null, b);
         if(b.bUnits() + b.rUnits() <= 8)
-            plyDepth = 9;
+            plyDepth = 7;
         try {
-            helper(root, piece, plyDepth);
+            helper(root, color, plyDepth);
         } catch (Exception ex) {
             Logger.getLogger(SolutionSpace.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    /*
+    /**
      * recursive helper method to generate children nodes
+     * creates the search space for the future moves.
+     * @param current is the current node
+     * @param color is the color we are generating for
+     * @param count the amount of iterations to repeat
+     * @throws Exception
      */
-    private void helper(Node current, char piece, int count) throws Exception
+    private void helper(Node current, char color, int count) throws Exception
     {
         char other;
-        if(piece == 'B')
+        if(color == 'B')
             other = 'R';
         else
             other = 'B';
@@ -54,7 +61,7 @@ public class SolutionSpace {
             return;
         if(current.getCurrent().victory())
             return;
-        current.createChildren(piece);
+        current.createChildren(color);
         for(int i=0; i<current.children.size(); i++)
         {
             helper(current.children.get(i), other, count-1);
@@ -69,6 +76,9 @@ public class SolutionSpace {
         return root;
     }
     
+    /**
+     * @return the ply depth
+     */
     public int getPlyDepth()
     {
             return plyDepth;

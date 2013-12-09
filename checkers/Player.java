@@ -1,5 +1,10 @@
 package checkers;
 
+/**
+ * This represents the player, which could be an AI or User.
+ * @author jayact
+ *
+ */
 public abstract class Player 
 {
 	protected char piece;

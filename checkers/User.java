@@ -2,6 +2,12 @@ package checkers;
 
 import java.util.ArrayList;
 
+/**
+ * This class defines the user, or human. It interacts
+ * with the gui to select the next move.
+ * @author jayact
+ *
+ */
 public class User extends Player 
 {
 	
@@ -19,42 +25,40 @@ public class User extends Player
 	 */
 	public Board takeTurn(Board b, GUI gui) throws Exception {
 		ArrayList<Piece> jumps = b.allJumps(piece);
-		if(jumps.size() != 0)
+		gui.append("\n" + piece + "'s turn");
+		if(jumps.size() != 0) //if there are jumps, get the user input for them
 		{
+			gui.append("\n" + piece + " must jump");
 			gui.display(b, jumps, '*');
-			gui.append(piece + ": A jump must be \nmade. Select a \nhighlighted piece:\n");
-			Piece p_old = gui.getMove(b, jumps, piece);
+			Piece p_old = gui.getMove(b, jumps, piece, null);
 			ArrayList<Piece> moves = b.validJumps(p_old);
 			boolean looping = true;
 			boolean jumped = false;
 			while(looping == true)
 			{
 				gui.display(b, moves, '+');
-				gui.append(piece + ": Please select a \nhighlighted space:\n");
-				Piece p_new = gui.getMove(b, moves, '-');
-				if(p_new == null)//hack for deselect featurne
+				Piece p_new = gui.getMove(b, moves, '-', p_old);
+				if(p_new == null)//hack for deselect feature
 				{
-					if(jumped == true)
-						return b;
-					else
+					if(jumped == false)
 						return takeTurn(b, gui);
 				}
-				looping = b.makeMove(p_old, p_new);
-				p_old = p_new;
-				moves = b.validJumps(p_old);
-				if(looping == true)
+				else
+				{
+					looping = b.makeMove(p_old, p_new);
+					p_old = p_new;
+					moves = b.validJumps(p_old);
 					jumped = true;
+				}
 			}
 		}
-		else
+		else //else, get the user to select a move
 		{	
 			gui.display(b);
-			gui.append(piece + ": Please select a \npiece to move:\n");
 			Piece p_old = gui.getMove(b, piece);
 			ArrayList<Piece> moves = b.validMoves(p_old);
 			gui.display(b, moves, '+');
-			gui.append(piece + ": Please select a \nhighlighted space:\n");
-			Piece p_new = gui.getMove(b, moves, '-');
+			Piece p_new = gui.getMove(b, moves, '-', p_old);
 			if(p_new == null)
 				return takeTurn(b,gui);
 			b.makeMove(p_old, p_new);

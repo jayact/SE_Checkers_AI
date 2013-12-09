@@ -1,20 +1,25 @@
 package checkers;
 import java.util.ArrayList;
 
-
+/**
+ * Represents the board state, with the current pieces and unit counts.
+ * @author jayact
+ *
+ */
 public class Board{
-	//private Piece[][] board;
 	private int b_units;
 	private int r_units;
 	ArrayList<ArrayList<Piece>> board;
-//	private int row = 8;
-//	private int col = 8;
 	
 	public Board()
 	{
 		setup();
 	}
 	
+	/**
+	 * Deep copies another board class
+	 * @param board
+	 */
 	public Board(Board board)
     {
         this.board = new ArrayList<ArrayList<Piece>>();
@@ -388,56 +393,6 @@ public class Board{
 		}
 		return result;
 	}
-	
-	/**
-	 * Returns jumps if available, otherwise, returns all available moves.
-	 * @param color
-	 * @return
-	 * @throws Exception
-	 */
-	/*public ArrayList<Board> finalMoves(char color) throws Exception
-	{
-		ArrayList<Board> result = new ArrayList<Board>();
-		ArrayList<Piece> moves = allJumps(color);
-		if(moves.size() != 0)
-		{
-			for(Piece move : moves)
-			{
-				ArrayList<Piece> jumps = validJumps(move);
-				for(Piece jump : jumps)
-				{
-					Board temp = new Board(this);
-					boolean cont = true;
-					while(cont == true)
-					{
-						cont = temp.makeMove(move, jump);
-						result.add(temp);
-						
-					}
-				}
-			}
-			return result;
-		}
-
-		for(int i = 0; i < row; i++)
-		{
-			for(int j = 0; j < col; j++)
-			{
-				Piece p = board.get(i).get(j);
-				if(p.getColor() != '-')
-				{
-					moves = validMoves(p);
-					for(Piece move : moves)
-					{
-						Board temp = new Board(this);
-						temp.makeMove(p, move);
-						result.add(temp);
-					}
-				}
-			}
-		}
-		return result;
-	}*/
 	
 	/**
 	 * Returns all pieces available to jump

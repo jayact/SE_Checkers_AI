@@ -29,10 +29,11 @@ public interface GUI
 	 * @param b is the board.
 	 * @param moves is the list of moves.
 	 * @param piece is the character we are looking for in the piece.
+	 * @param orig is the original piece being movved. (for deselect check)
 	 * @return the piece to move to.
 	 * @throws IOException if input is improper (ie. e,f instead of 1,2.)
 	 */
-	public Piece getMove(Board b, ArrayList<Piece> moves, char piece) throws IOException;
+	public Piece getMove(Board b, ArrayList<Piece> moves, char piece, Piece orig) throws IOException;
 	
 	/**
 	 * Standard help command

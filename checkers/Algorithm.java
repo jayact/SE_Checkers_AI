@@ -3,7 +3,8 @@ package checkers;
 import java.util.Random;
 
 /**
- * Abstract class that the algorithms will extend
+ * Abstract class that the algorithms will extend.
+ * Different algorithms have different ways of searching through solution space.
  * @author Jack
  */
 

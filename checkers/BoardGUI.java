@@ -6,18 +6,14 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-/*
- * BoardGUI.java
- *
- * Created on Nov 18, 2013, 5:23:36 PM
- */
 /**
- *
+ *This class is the runtime GUI. The user interacts with
+ *this to select moves.
  * @author mcginl04
  */
 public class BoardGUI extends javax.swing.JFrame implements GUI{
-    private static final String root = "C:\\Users\\Joe\\Documents\\NetBeansProjects\\checkers\\src\\checkers\\";
-    //private static final String root = "/home/jayact/workspace/Senior project/src/checkers/";
+   // private static final String root = "C:\\Users\\Joe\\Documents\\NetBeansProjects\\checkers\\src\\checkers\\";
+    private static final String root = "/home/jayact/workspace/Senior project/src/checkers/";
     private static final ImageIcon EMPTY = new ImageIcon(root +"empty.gif");
     private static final ImageIcon EMPTY_HIGHLIGHT = new ImageIcon(root +"emptyLighted.gif");
     private static final ImageIcon BLACK = new ImageIcon(root +"black.gif");
@@ -125,14 +121,14 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
         pack();
     }// </editor-fold>                        
 
-    /*
+    /**
      * Closes the window and exits the program.
      */
     private void closeItemActionPerformed(java.awt.event.ActionEvent evt) {                                          
         System.exit(0);
     }                                         
 
-    /*
+    /**
      * Displays the board in the boardPanel using the board provided.
      * 
      * @param b, the board to display
@@ -164,7 +160,7 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
         pack();
     }
     
-    /*
+    /**
      * Interprets the mouse click in boardPanel to find what piece was clicked
      */
     private void onClicked(java.awt.event.MouseEvent evt) {                           
@@ -179,7 +175,7 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
         selectedPiece = p;
     }                      
     
-    /*
+    /**
      * Appends the given string to the logField
      * @param s, the string to append
      */
@@ -201,7 +197,7 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
     private javax.swing.JMenuItem saveItem;
     // End of variables declaration                   
 
-    /*
+    /**
      * displays the board and highlights the moves provided in the boardPanel
      * 
      * @param b, the board to display
@@ -269,21 +265,21 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
         pack();
     }
 
-    /*
+    /**
      * Uses the selected piece from onClicked to see if it is a valid selection
      * If so, it is returned to be used by the User class. Otherwise, it waits
      * for another selection by onClicked
      * 
      * @param b, the board to use
-     * @param piece, the piece representing which player's turn it is
+     * @param color, the piece representing which player's turn it is
      * @return Piece, the piece that is selected
      */
     @Override
-    public Piece getMove(Board b, char piece) throws Exception {
+    public Piece getMove(Board b, char color) throws Exception {
         int[] pos = new int[2];
         boolean valid = false;
         while (valid == false) {
-            while (playersTurn != piece && isPieceSelected == false) {
+            while (playersTurn != color && isPieceSelected == false) {
                 try {
                     //do what you want to do before sleeping
                     Thread.currentThread().sleep(1000);//sleep for 1000 ms
@@ -295,7 +291,7 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
             this.b = b;
             pos = selectedPiece.getPosition();
 
-            if (b.getPiece(pos[0], pos[1]).getColor() != piece || b.validMoves(b.getPiece(pos[0], pos[1])).isEmpty()) {
+            if (b.getPiece(pos[0], pos[1]).getColor() != color || b.validMoves(b.getPiece(pos[0], pos[1])).isEmpty()) {
                 logField.append("This is not a valid \nchoice.\n");
                 isPieceSelected = false;
             } else {
@@ -310,20 +306,20 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
         return b.getPiece(pos[0], pos[1]);
     }
 
-    /*
+    /**
      * Determines which move to make using the move list provided. If a move is
      * not valid, it waits for another potential move from onclicked.
      * 
      * @param b, the board to use
      * @param moves, the list of moves possible,
-     * @param piece, the piece represention which player's turn it is
+     * @param color, the piece represention which player's turn it is
      * @return Piece, the selected move
      */
-    public Piece getMove(Board b, ArrayList<Piece> moves, char piece) throws IOException {
+    public Piece getMove(Board b, ArrayList<Piece> moves, char color, Piece orig) throws IOException {
         int[] pos = new int[2];
         boolean  valid = false;
         while (valid == false) {
-            while (playersTurn != piece && isPieceSelected == false) {
+            while (playersTurn != color && isPieceSelected == false) {
                 try {
                     //do what you want to do before sleeping
                     Thread.currentThread().sleep(1000);//sleep for 1000 ms
@@ -335,7 +331,7 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
             this.b = b;
             pos = selectedPiece.getPosition();
 
-            if(b.getPiece(pos[0], pos[1]).getColor() == piece)
+            if(b.getPiece(pos[0], pos[1]).getColor() == color)
 			{
 				for(Piece move : moves)
 				{
@@ -347,6 +343,11 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
 			}
 			if(valid == false)
 			{
+				if(selectedPiece.equals(orig))//hack for deselect
+				{
+					isPieceSelected = false;
+					return null;
+				}
 				logField.append("This is not a valid \nchoice.\n");
                                 isPieceSelected = false;
 			}
@@ -359,7 +360,7 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
         return b.getPiece(pos[0], pos[1]);
     }
 
-    /*
+    /**
      * Appends a help message to the logField
      */
     public void help() {

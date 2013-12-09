@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * REUSING DSA CODE FOR SORTING
+ * @author jayact
+ *
+ * @param <E>
+ */
 public class QuickSort <E extends Comparable>
 {
 	List<E> list;

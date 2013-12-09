@@ -5,7 +5,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class TextGUI implements GUI
+/**
+ * THIS CLASS IS OUTDATED, AND MUST BE UPDATED TO NEW
+ * USER AND GUI STRUCTURE IN ORDER TO GET IT TO WORK
+ * @author jayact
+ *
+ */
+public class TextGUI
 {
 	/**
 	 * Work in progress.

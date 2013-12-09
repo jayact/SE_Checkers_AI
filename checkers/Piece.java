@@ -1,5 +1,10 @@
 package checkers;
 
+/**
+ * Purpose is to represent each piece on the board in its own way.
+ * @author jayact
+ *
+ */
 public class Piece 
 {
 	private char color;
@@ -89,6 +94,9 @@ public class Piece
 			return true;
 	}
 	
+	/**
+	 * @return string representation
+	 */
 	public String toString()
 	{
 		return color + " @ (" + row + "," + col + ")"; 
