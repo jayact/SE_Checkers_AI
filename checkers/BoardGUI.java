@@ -12,8 +12,9 @@ import javax.swing.JLabel;
  * @author mcginl04
  */
 public class BoardGUI extends javax.swing.JFrame implements GUI{
-    private static final String root = "C:\\Users\\Joe\\Documents\\NetBeansProjects\\checkers\\src\\checkers\\";
+    //private static final String root = "C:\\Users\\Joe\\Documents\\NetBeansProjects\\checkers\\src\\checkers\\";
     //private static final String root = "/home/jayact/workspace/Senior project/src/checkers/";
+    private static final String root = "C:\\Users\\Jack\\Documents\\NetBeansProjects\\Senior Project\\src\\checkers\\";
     private static final ImageIcon EMPTY = new ImageIcon(root +"empty.gif");
     private static final ImageIcon EMPTY_HIGHLIGHT = new ImageIcon(root +"emptyLighted.gif");
     private static final ImageIcon BLACK = new ImageIcon(root +"black.gif");

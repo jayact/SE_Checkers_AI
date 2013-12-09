@@ -1,5 +1,7 @@
 package checkers;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Represents the board state, with the current pieces and unit counts.
@@ -363,8 +365,25 @@ public class Board{
 	{
 		if(b_units == 0 || r_units == 0)
 			return true;
-		return false;
+		return noMoves();
 	}
+        
+        public boolean noMoves()
+        {
+        try {
+            if(allMoves('B').isEmpty() && allJumps('B').isEmpty())
+                return true;
+        } catch (Exception ex) {
+            Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            if(allMoves('R').isEmpty() && allJumps('R').isEmpty())
+                return true;
+        } catch (Exception ex) {
+            Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            return false;
+        }
 	
 	/**
 	 * This returns the list of pieces that can jump. A jump must be made, if available, as per the rules.

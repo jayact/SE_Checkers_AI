@@ -113,6 +113,9 @@ public class Game {
             }
             System.out.println();
         }
-        gui.victory(count%2);
+        if(board.noMoves())
+            gui.victory((count+1)%2);
+        else
+            gui.victory(count%2);
     }
 }
