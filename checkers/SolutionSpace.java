@@ -32,8 +32,8 @@ public class SolutionSpace {
     public SolutionSpace(Board b, char color)
     {
         root = new Node(null, b);
-        if(b.bUnits() + b.rUnits() <= 8)
-            plyDepth = 7;
+//        if(b.bUnits() + b.rUnits() <= 8)
+//            plyDepth = 7;
         try {
             helper(root, color, plyDepth);
         } catch (Exception ex) {
