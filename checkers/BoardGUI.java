@@ -125,10 +125,18 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
         pack();
     }// </editor-fold>                        
 
+    /*
+     * Closes the window and exits the program.
+     */
     private void closeItemActionPerformed(java.awt.event.ActionEvent evt) {                                          
         System.exit(0);
     }                                         
 
+    /*
+     * Displays the board in the boardPanel using the board provided.
+     * 
+     * @param b, the board to display
+     */
     public void display(Board b) {
         this.b = b;
         boardPanel.removeAll();
@@ -155,6 +163,10 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
         }
         pack();
     }
+    
+    /*
+     * Interprets the mouse click in boardPanel to find what piece was clicked
+     */
     private void onClicked(java.awt.event.MouseEvent evt) {                           
         int row = (evt.getY()/BLACK.getIconHeight());
         int col = (evt.getX()/BLACK.getIconWidth());
@@ -167,21 +179,15 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
         selectedPiece = p;
     }                      
     
+    /*
+     * Appends the given string to the logField
+     * @param s, the string to append
+     */
     public void append(String s) {
         logField.append(s);
     }
 
-    /**
-     * @param args the command line arguments
-     */
-   /* public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
 
-            public void run() {
-                new BoardGUI();
-            }
-        });
-    }*/
     // Variables declaration - do not modify                     
     private javax.swing.JPanel boardPanel;
     private javax.swing.JScrollPane jScrollPane1;
@@ -195,6 +201,13 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
     private javax.swing.JMenuItem saveItem;
     // End of variables declaration                   
 
+    /*
+     * displays the board and highlights the moves provided in the boardPanel
+     * 
+     * @param b, the board to display
+     * @param moves, the moves to highlight
+     * @param display, determines between moves('+') or jumps ('*')
+     */
     @Override
     public void display(Board b, ArrayList<Piece> moves, char display) {
         this.b = b;
@@ -256,6 +269,15 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
         pack();
     }
 
+    /*
+     * Uses the selected piece from onClicked to see if it is a valid selection
+     * If so, it is returned to be used by the User class. Otherwise, it waits
+     * for another selection by onClicked
+     * 
+     * @param b, the board to use
+     * @param piece, the piece representing which player's turn it is
+     * @return Piece, the piece that is selected
+     */
     @Override
     public Piece getMove(Board b, char piece) throws Exception {
         int[] pos = new int[2];
@@ -288,7 +310,15 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
         return b.getPiece(pos[0], pos[1]);
     }
 
-    //@Override
+    /*
+     * Determines which move to make using the move list provided. If a move is
+     * not valid, it waits for another potential move from onclicked.
+     * 
+     * @param b, the board to use
+     * @param moves, the list of moves possible,
+     * @param piece, the piece represention which player's turn it is
+     * @return Piece, the selected move
+     */
     public Piece getMove(Board b, ArrayList<Piece> moves, char piece) throws IOException {
         int[] pos = new int[2];
         boolean  valid = false;
@@ -329,7 +359,9 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
         return b.getPiece(pos[0], pos[1]);
     }
 
-    @Override
+    /*
+     * Appends a help message to the logField
+     */
     public void help() {
         logField.append("Welcome to \ncheckers! Here \nare the instructions: \n");
         logField.append("To select a piece \nor move, click the \ncorresponding cell \nof the piece or \nspace you want\n");
