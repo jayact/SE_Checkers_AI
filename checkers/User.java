@@ -22,7 +22,7 @@ public class User extends Player
 		if(jumps.size() != 0)
 		{
 			gui.display(b, jumps, '*');
-			System.out.println(piece + ": A jump must be made. Select a '*':");
+			gui.append(piece + ": A jump must be \nmade. Select a \nhighlighted piece:\n");
 			Piece p_old = gui.getMove(b, jumps, piece);
 			ArrayList<Piece> moves = b.validJumps(p_old);
 			boolean looping = true;
@@ -30,7 +30,7 @@ public class User extends Player
 			while(looping == true)
 			{
 				gui.display(b, moves, '+');
-				System.out.println(piece + ": Please select a '+', exit to deselect:");
+				gui.append(piece + ": Please select a \nhighlighted space:\n");
 				Piece p_new = gui.getMove(b, moves, '-');
 				if(p_new == null)//hack for deselect featurne
 				{
@@ -49,11 +49,11 @@ public class User extends Player
 		else
 		{	
 			gui.display(b);
-			System.out.println(piece + ": Please select a piece to move (row,col):");
+			gui.append(piece + ": Please select a \npiece to move:\n");
 			Piece p_old = gui.getMove(b, piece);
 			ArrayList<Piece> moves = b.validMoves(p_old);
 			gui.display(b, moves, '+');
-			System.out.println(piece + ": Please select a '+', or type exit to deselect:");
+			gui.append(piece + ": Please select a \nhighlighted space:\n");
 			Piece p_new = gui.getMove(b, moves, '-');
 			if(p_new == null)
 				return takeTurn(b,gui);
