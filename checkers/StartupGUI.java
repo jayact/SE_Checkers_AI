@@ -1,47 +1,44 @@
 package checkers;
-
-import java.awt.event.ActionEvent;
-import java.io.IOException;
-import java.util.ArrayList;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-
+import Algorithms.*;
 /*
- * BoardGUI.java
+ * GUI.java
  *
- * Created on Nov 18, 2013, 5:23:36 PM
+ * Created on Nov 18, 2013, 4:30:28 PM
  */
 /**
  *
  * @author mcginl04
  */
-public class BoardGUI extends javax.swing.JFrame implements GUI{
-    private static final String root = "C:\\Users\\Joe\\Documents\\NetBeansProjects\\checkers\\src\\checkers\\";
-    //private static final String root = "/home/jayact/workspace/Senior project/src/checkers/";
-    private static final ImageIcon EMPTY = new ImageIcon(root +"empty.gif");
-    private static final ImageIcon EMPTY_HIGHLIGHT = new ImageIcon(root +"emptyLighted.gif");
-    private static final ImageIcon BLACK = new ImageIcon(root +"black.gif");
-    private static final ImageIcon BLACK_HIGHLIGHT = new ImageIcon(root +"blackLighted.gif");
-    private static final ImageIcon RED = new ImageIcon(root +"red.gif");
-    private static final ImageIcon RED_HIGHLIGHT = new ImageIcon(root +"redLighted.gif");
-    private static final ImageIcon BLACK_KING = new ImageIcon(root +"blackKing.gif");
-    private static final ImageIcon BLACK_KING_HIGHLIGHT = new ImageIcon(root +"blackKingLighted.gif");
-    private static final ImageIcon RED_KING = new ImageIcon(root +"redKing.gif");
-    private static final ImageIcon RED_KING_HIGHLIGHT = new ImageIcon(root +"redKingLighted.gif");
-    
-    private Board b; //update board after move
-    private boolean isPieceSelected = false;
-    private char playersTurn = 'b';
-    private Piece selectedPiece;
+public class StartupGUI extends javax.swing.JFrame {
 
-    /** Creates new form BoardGUI */
-    public BoardGUI() {
-        initComponents();
-        b = new Board();
-        display(b);
-        setVisible(true);
+    private static boolean finishSelection = false;
+    private static Player p1;
+    private static Player p2;
+    
+    /*
+     * returns the players chosen by the user to play the game
+     * @return Player[], two players for the game
+     */
+    public Player[] getPlayers()
+    {
+    	while(finishSelection == false)
+    	{
+    		 try {
+                 //do what you want to do before sleeping
+                 Thread.currentThread().sleep(1000);//sleep for 1000 ms
+                 //do what you want to do after sleeptig
+             } catch (InterruptedException ie) {
+                 //If this thread was intrrupted by nother thread
+             }
+    	}
+    	return new Player[]{p1, p2};
     }
     
+    /** Creates new form GUI */
+    public StartupGUI() {
+        initComponents();
+    }
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -51,319 +48,112 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
-        logField = new javax.swing.JTextArea();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        boardPanel = new javax.swing.JPanel();
-        menuBar = new javax.swing.JMenuBar();
-        fileMenu = new javax.swing.JMenu();
-        saveItem = new javax.swing.JMenuItem();
-        loadItem = new javax.swing.JMenuItem();
-        closeItem = new javax.swing.JMenuItem();
-        helpMenu = new javax.swing.JMenu();
-        helpItem = new javax.swing.JMenuItem();
+        matchStartup = new javax.swing.JButton();
+        titleLabel = new javax.swing.JLabel();
+        firstPlayer = new javax.swing.JComboBox();
+        secondPlayer = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Checkers");
+        setTitle("Checkers Setup");
 
-        boardPanel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                onClicked(evt);
-            }
-        });
-        boardPanel.setLayout(new java.awt.GridLayout(8, 8));
-
-        fileMenu.setText("File");
-
-        saveItem.setText("Save");
-        fileMenu.add(saveItem);
-
-        loadItem.setText("Load");
-        fileMenu.add(loadItem);
-
-        closeItem.setText("Close");
-        closeItem.addActionListener(new java.awt.event.ActionListener() {
+        matchStartup.setText("Begin Match!");
+        matchStartup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                closeItemActionPerformed(evt);
+                matchStartupActionPerformed(evt);
             }
         });
-        fileMenu.add(closeItem);
 
-        menuBar.add(fileMenu);
+        titleLabel.setText("Checkers Setup");
 
-        helpMenu.setText("Help");
-        helpItem.setText("Help");
-        helpMenu.add(helpItem);
-        helpItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                helpItemActionPerformed(evt);
-            }
+        firstPlayer.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Human Player", "Minimax (AI)", "Minimax with alphabeta (AI)", "Negamax (AI)", "Negascout (AI)", "A* (AI)", "Expectiminimax (AI)" }));
 
-            private void helpItemActionPerformed(ActionEvent evt) {
-                help();
-            }
-        });
-        menuBar.add(helpMenu);
-
-        setJMenuBar(menuBar);
-        jScrollPane1.setViewportView(logField);
+        secondPlayer.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Human Player", "Minimax (AI)", "Minimax with alphabeta (AI)", "Negamax (AI)", "Negascout (AI)", "A* (AI)", "Expectiminimax (AI)" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(boardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(89, 89, 89)
+                .addComponent(firstPlayer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+                .addComponent(matchStartup, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(53, 53, 53)
+                .addComponent(secondPlayer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(80, 80, 80))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(373, Short.MAX_VALUE)
+                .addComponent(titleLabel)
+                .addGap(341, 341, 341))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
-            .addComponent(boardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(61, 61, 61)
+                .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(firstPlayer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(secondPlayer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(matchStartup))
+                .addContainerGap(151, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>                        
 
     /*
-     * Closes the window and exits the program.
+     * Button to start the BoardGUI with the chosen players
      */
-    private void closeItemActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        System.exit(0);
-    }                                         
+    private void matchStartupActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        String p1_str = (String) firstPlayer.getSelectedItem();
+        String p2_str = (String) secondPlayer.getSelectedItem();
+        setVisible(false);
+        p1 = determinePlayer(p1_str, 'B');
+        p2 = determinePlayer(p2_str, 'R');
+        finishSelection = true;
+    }                                            
 
     /*
-     * Displays the board in the boardPanel using the board provided.
-     * 
-     * @param b, the board to display
+     * helper method to switch the string returned by the button to a Player
+     * @param player, the string representation of the player chosen
+     * @param piece, the piece this player will play as, either 'B' or 'R'
+     * @return Player, the player determined from the string
      */
-    public void display(Board b) {
-        this.b = b;
-        boardPanel.removeAll();
-        
-        for(int row=0; row<8; row++) {
-            for(int col=0; col<8; col++) {
-                Piece p = b.getPiece(row, col);
-                
-                if(p.getColor() == 'B') {
-                    if(p.isKing())
-                        boardPanel.add(new JLabel(BLACK_KING));
-                    else
-                        boardPanel.add(new JLabel(BLACK));
-                }
-                else if(p.getColor() == 'R') {
-                    if(p.isKing())
-                        boardPanel.add(new JLabel(RED_KING));
-                    else
-                        boardPanel.add(new JLabel(RED));
-                }
-                else
-                    boardPanel.add(new JLabel(EMPTY));
-            }
+    private Player determinePlayer(String player, char piece) {
+        Player p;
+        switch(player) {
+            case "Human Player": p = new User(piece);
+                break;
+            case "Minimax (AI)": p = new AI(piece, new MiniMax());
+                break;
+            case "Minimax with alphabeta (AI)": p = new AI(piece, new MiniMaxAlphaBeta());
+                break;
+            case "Negascout (AI)": p = new AI(piece, new NegaScout());
+                break;
+            //case "Negamax (AI)": p = new AI(piece, new NegaMax());
+            //case "A* (AI)": p = new AI(piece, new A());
+            //case "Expectiminimax (AI)": new AI(piece, new ExpectiMiniMax());
+            default: p = new User(piece);
+                break;
         }
-        pack();
+        return p;
     }
-    
-    /*
-     * Interprets the mouse click in boardPanel to find what piece was clicked
+    /**
+     * @param args the command line arguments
      */
-    private void onClicked(java.awt.event.MouseEvent evt) {                           
-        int row = (evt.getY()/BLACK.getIconHeight());
-        int col = (evt.getX()/BLACK.getIconWidth());
-        if(row > 7)
-            row = 7;
-        if(col > 7)
-            col = 7;
-        Piece p = b.getPiece(row,col);
-        isPieceSelected = true;
-        selectedPiece = p;
-    }                      
-    
-    /*
-     * Appends the given string to the logField
-     * @param s, the string to append
-     */
-    public void append(String s) {
-        logField.append(s);
+    public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+
+            public void run() {
+                new StartupGUI().setVisible(true);
+            }
+        });
     }
-
-
     // Variables declaration - do not modify                     
-    private javax.swing.JPanel boardPanel;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JMenuItem closeItem;
-    private javax.swing.JMenu fileMenu;
-    private javax.swing.JMenu helpMenu;
-    private javax.swing.JMenuItem helpItem;
-    private javax.swing.JMenuItem loadItem;
-    private javax.swing.JTextArea logField;
-    private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenuItem saveItem;
+    private javax.swing.JComboBox firstPlayer;
+    private javax.swing.JButton matchStartup;
+    private javax.swing.JComboBox secondPlayer;
+    private javax.swing.JLabel titleLabel;
     // End of variables declaration                   
-
-    /*
-     * displays the board and highlights the moves provided in the boardPanel
-     * 
-     * @param b, the board to display
-     * @param moves, the moves to highlight
-     * @param display, determines between moves('+') or jumps ('*')
-     */
-    @Override
-    public void display(Board b, ArrayList<Piece> moves, char display) {
-        this.b = b;
-        boardPanel.removeAll();
-        
-        for(int row=0; row<8; row++) {
-            for (int col = 0; col < 8; col++) {
-                Piece p = b.getPiece(row, col);
-                boolean found = false;
-                for (Piece move : moves) {
-                    int[] pos = move.getPosition();
-                    if (row == pos[0] && col == pos[1]) {
-                        found = true;
-                        if (display == '+') {
-                            boardPanel.add(new JLabel(EMPTY_HIGHLIGHT));
-                        } else if (display == '*') {
-                            switch (p.getColor()) {
-                                case 'R':
-                                    if (p.isKing()) {
-                                        boardPanel.add(new JLabel(RED_KING_HIGHLIGHT));
-                                    } else {
-                                        boardPanel.add(new JLabel(RED_HIGHLIGHT));
-                                    }
-                                    break;
-                                case 'B':
-                                    if (p.isKing()) {
-                                        boardPanel.add(new JLabel(BLACK_KING_HIGHLIGHT));
-                                    } else {
-                                        boardPanel.add(new JLabel(BLACK_HIGHLIGHT));
-                                    }
-                                    break;
-                            }
-                        }
-
-                    }
-                }
-                if(found == false) {
-                    switch (p.getColor()) {
-                        case 'R':
-                            if (p.isKing()) {
-                                boardPanel.add(new JLabel(RED_KING));
-                            } else {
-                                boardPanel.add(new JLabel(RED));
-                            }
-                            break;
-                        case 'B':
-                            if (p.isKing()) {
-                                boardPanel.add(new JLabel(BLACK_KING));
-                            } else {
-                                boardPanel.add(new JLabel(BLACK));
-                            }
-                            break;
-                        case '-':
-                            boardPanel.add(new JLabel(EMPTY));
-                    }
-                }
-            }
-        }
-        pack();
-    }
-
-    /*
-     * Uses the selected piece from onClicked to see if it is a valid selection
-     * If so, it is returned to be used by the User class. Otherwise, it waits
-     * for another selection by onClicked
-     * 
-     * @param b, the board to use
-     * @param piece, the piece representing which player's turn it is
-     * @return Piece, the piece that is selected
-     */
-    @Override
-    public Piece getMove(Board b, char piece) throws Exception {
-        int[] pos = new int[2];
-        boolean valid = false;
-        while (valid == false) {
-            while (playersTurn != piece && isPieceSelected == false) {
-                try {
-                    //do what you want to do before sleeping
-                    Thread.currentThread().sleep(1000);//sleep for 1000 ms
-                    //do what you want to do after sleeptig
-                } catch (InterruptedException ie) {
-                    //If this thread was intrrupted by nother thread
-                }
-            }
-            this.b = b;
-            pos = selectedPiece.getPosition();
-
-            if (b.getPiece(pos[0], pos[1]).getColor() != piece || b.validMoves(b.getPiece(pos[0], pos[1])).isEmpty()) {
-                logField.append("This is not a valid \nchoice.\n");
-                isPieceSelected = false;
-            } else {
-                valid = true;
-            }
-        }
-        if(playersTurn == 'B')
-            playersTurn = 'R';
-        else if(playersTurn == 'R')
-            playersTurn = 'B';
-        isPieceSelected = false;
-        return b.getPiece(pos[0], pos[1]);
-    }
-
-    /*
-     * Determines which move to make using the move list provided. If a move is
-     * not valid, it waits for another potential move from onclicked.
-     * 
-     * @param b, the board to use
-     * @param moves, the list of moves possible,
-     * @param piece, the piece represention which player's turn it is
-     * @return Piece, the selected move
-     */
-    public Piece getMove(Board b, ArrayList<Piece> moves, char piece) throws IOException {
-        int[] pos = new int[2];
-        boolean  valid = false;
-        while (valid == false) {
-            while (playersTurn != piece && isPieceSelected == false) {
-                try {
-                    //do what you want to do before sleeping
-                    Thread.currentThread().sleep(1000);//sleep for 1000 ms
-                    //do what you want to do after sleeptig
-                } catch (InterruptedException ie) {
-                    //If this thread was intrrupted by nother thread
-                }
-            }
-            this.b = b;
-            pos = selectedPiece.getPosition();
-
-            if(b.getPiece(pos[0], pos[1]).getColor() == piece)
-			{
-				for(Piece move : moves)
-				{
-					if(move.equals(b.getPiece(pos[0], pos[1])))
-					{
-						valid = true;
-					}
-				}
-			}
-			if(valid == false)
-			{
-				logField.append("This is not a valid \nchoice.\n");
-                                isPieceSelected = false;
-			}
-        }
-        if(playersTurn == 'B')
-            playersTurn = 'R';
-        else if(playersTurn == 'R')
-            playersTurn = 'B';
-        isPieceSelected = false;
-        return b.getPiece(pos[0], pos[1]);
-    }
-
-    /*
-     * Appends a help message to the logField
-     */
-    public void help() {
-        logField.append("Welcome to \ncheckers! Here \nare the instructions: \n");
-        logField.append("To select a piece \nor move, click the \ncorresponding cell \nof the piece or \nspace you want\n");
-    }
 }
