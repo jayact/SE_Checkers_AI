@@ -25,10 +25,10 @@ public class User extends Player
 	 */
 	public Board takeTurn(Board b, GUI gui) throws Exception {
 		ArrayList<Piece> jumps = b.allJumps(piece);
-		gui.append("\n" + piece + "'s turn");
+		gui.append("\n" + piece + "'s turn\n");
 		if(jumps.size() != 0) //if there are jumps, get the user input for them
 		{
-			gui.append("\n" + piece + " must jump");
+			gui.append("\n" + piece + " must jump\n");
 			gui.display(b, jumps, '*', null);
 			Piece p_old = gui.getMove(b, jumps, piece, null);
 			ArrayList<Piece> moves = b.validJumps(p_old);
