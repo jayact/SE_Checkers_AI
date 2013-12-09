@@ -76,9 +76,8 @@ public class MiniMax extends checkers.Algorithm{
                 }
                 
             }
-            if(maxNode.size() == 0)
+            if(maxNode.isEmpty())
                 return current;
-            Random r = new Random();
             return maxNode.get(r.nextInt(maxNode.size()));
         }
     }
@@ -117,9 +116,8 @@ public class MiniMax extends checkers.Algorithm{
                     minNode.add(n);
                 }
             }
-            if(minNode.size() == 0)
+            if(minNode.isEmpty())
                 return current;
-            Random r = new Random();
             return minNode.get(r.nextInt(minNode.size()));
         }
     }  

@@ -30,12 +30,13 @@ public class SolutionSpace {
     public SolutionSpace(Board b, char piece)
     {
         root = new Node(null, b);
+        if(b.bUnits() + b.rUnits() <= 8)
+            plyDepth = 9;
         try {
             helper(root, piece, plyDepth);
         } catch (Exception ex) {
             Logger.getLogger(SolutionSpace.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
     
     /*

@@ -8,6 +8,8 @@ import checkers.Algorithm;
 import checkers.Board;
 import checkers.Node;
 import checkers.SolutionSpace;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  *
@@ -15,9 +17,16 @@ import checkers.SolutionSpace;
  */
 public class MiniMaxAlphaBeta extends Algorithm {
     
+    private Node emptyMinNode;
+    private Node emptyMaxNode;
+    
     public MiniMaxAlphaBeta()
     {
         super();
+        emptyMinNode = new Node();
+        emptyMaxNode = new Node();
+        emptyMinNode.setRating(Integer.MIN_VALUE);
+        emptyMaxNode.setRating(Integer.MAX_VALUE);
     }
 
     @Override
@@ -60,9 +69,10 @@ public class MiniMaxAlphaBeta extends Algorithm {
         else
         {
             int maxRating = alpha.getRating();
-            Node maxNode = alpha;
+            ArrayList<Node> maxNode = new ArrayList<>();
+            LinkedList<Node> children = current.getChildren();
             //Node alphaNode = current;
-            for(Node n: current.getChildren())
+            for(Node n: children)
             {
                 Node temp = minimize(n, min, depth-1, alpha, beta);
                 temp.rateBoard(piece);
@@ -75,10 +85,12 @@ public class MiniMaxAlphaBeta extends Algorithm {
                 if(tempRating > maxRating)
                 {
                     alpha = n;
-                    maxNode = n;
+                    maxNode.add(n);
                 }
             }
-            return maxNode;
+            if(maxNode.isEmpty())
+                return alpha;
+            return maxNode.get(r.nextInt(maxNode.size()));
         }
     }
     
@@ -104,9 +116,10 @@ public class MiniMaxAlphaBeta extends Algorithm {
         else
         {
             int minRating = beta.getRating();
-            Node minNode = beta;
+            ArrayList<Node> minNode = new ArrayList<>();
+            LinkedList<Node> children = current.getChildren();
             //Node betaNode = current;
-            for(Node n: current.getChildren())
+            for(Node n: children)
             {
                 Node temp = maximize(n, min, depth-1, alpha, beta);
                 temp.rateBoard(piece);
@@ -114,10 +127,12 @@ public class MiniMaxAlphaBeta extends Algorithm {
                 if(tempRating < minRating)
                 {
                     beta = n;
-                    minNode = n;
+                    minNode.add(n);
                 }
             }
-            return minNode;
+            if(minNode.isEmpty())
+                return beta;
+            return minNode.get(r.nextInt(minNode.size()));
         }
         
     }

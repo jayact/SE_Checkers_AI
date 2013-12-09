@@ -20,6 +20,7 @@ public class Node implements Comparable{
     LinkedList<Node> children = new LinkedList<>();
     int rating;
     private static int boardSize = 8;
+    private static QuickSort q = new QuickSort();
     
     /**
      * Creates an instance of a Node object
@@ -39,7 +40,6 @@ public class Node implements Comparable{
     
     public void sortChildren()
     {
-        QuickSort q = new QuickSort();
         q.sort(children);
     }
     
@@ -124,7 +124,7 @@ public class Node implements Comparable{
         }
         
 	/**
-	 * Rates a board by the number of pieces.
+	 * Rates a board by the number of kings.
 	 * @param b
 	 * @return
 	 */
@@ -136,12 +136,17 @@ public class Node implements Comparable{
                 for(int j=0; j<8; j++)
                 {
                     Piece p = b.getPiece(i, j);
-                    int pVal = 0;
-                    if(p.getColor() == piece)
-                        pVal++;
+                    if(p.getColor()==piece){
+                        result++;
+                        if(p.isKing())
+                            result++;
+                    }
                     else if(p.getColor() != '-')
-                        pVal--;
-                    result += pVal;
+                    {
+                        result--;
+                        if(p.isKing())
+                            result--;
+                    }
                 }
             }
             return result;
@@ -157,14 +162,14 @@ public class Node implements Comparable{
         {
             int kingVal = 2;
             int result = 0;
-            int[][] posVals = {{4,3,3,3,3,3,3,4},
-                               {4,1,2,2,2,2,1,4},
-                               {4,1,2,2,2,2,1,4},
-                               {4,1,2,2,2,2,1,4},
-                               {4,1,2,2,2,2,1,4},
-                               {4,1,2,2,2,2,1,4},
-                               {4,1,2,2,2,2,1,4},
-                               {4,1,2,2,2,2,1,4}};
+            int[][] posVals = {{2,1,1,1,1,1,1,2},
+                               {2,1,1,1,1,1,1,2},
+                               {2,1,1,1,1,1,1,2},
+                               {2,1,1,1,1,1,1,2},
+                               {2,1,1,1,1,1,1,2},
+                               {2,1,1,1,1,1,1,2},
+                               {2,1,1,1,1,1,1,2},
+                               {2,1,1,1,1,1,1,2}};
             
             for(int i=0; i<8; i++)
             {
@@ -183,6 +188,7 @@ public class Node implements Comparable{
             }
             return result;
         }
+        
     
     
     /**

@@ -1,5 +1,7 @@
 package checkers;
 
+import java.util.Random;
+
 /**
  * Abstract class that the algorithms will extend
  * @author Jack
@@ -12,6 +14,7 @@ public abstract class Algorithm
     protected Node root;
     protected char max;
     protected char min;
+    protected Random r = new Random();
     
     /**
      * Creates an instance of Algorithm.  Used by specific algorithms to set up 
