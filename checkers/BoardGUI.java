@@ -1,5 +1,6 @@
 package checkers;
 
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
@@ -58,8 +59,8 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
         saveItem = new javax.swing.JMenuItem();
         loadItem = new javax.swing.JMenuItem();
         closeItem = new javax.swing.JMenuItem();
-        viewMenu = new javax.swing.JMenu();
         helpMenu = new javax.swing.JMenu();
+        helpItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Checkers");
@@ -89,10 +90,18 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
 
         menuBar.add(fileMenu);
 
-        viewMenu.setText("View");
-        menuBar.add(viewMenu);
-
         helpMenu.setText("Help");
+        helpItem.setText("Help");
+        helpMenu.add(helpItem);
+        helpItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                helpItemActionPerformed(evt);
+            }
+
+            private void helpItemActionPerformed(ActionEvent evt) {
+                help();
+            }
+        });
         menuBar.add(helpMenu);
 
         setJMenuBar(menuBar);
@@ -179,11 +188,11 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
     private javax.swing.JMenuItem closeItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
+    private javax.swing.JMenuItem helpItem;
     private javax.swing.JMenuItem loadItem;
     private javax.swing.JTextArea logField;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem saveItem;
-    private javax.swing.JMenu viewMenu;
     // End of variables declaration                   
 
     @Override
@@ -322,7 +331,7 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
 
     @Override
     public void help() {
-        logField.append("Welcome to checkers! Here are the instructions: \n");
-        logField.append("To select a piece or move, enter it as follows: row, col. Substitute row and col for the selected values\n");
+        logField.append("Welcome to \ncheckers! Here \nare the instructions: \n");
+        logField.append("To select a piece \nor move, click the \ncorresponding cell \nof the piece or \nspace you want\n");
     }
 }
