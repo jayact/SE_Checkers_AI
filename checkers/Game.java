@@ -113,5 +113,6 @@ public class Game {
             }
             System.out.println();
         }
+        gui.victory(count%2);
     }
 }
