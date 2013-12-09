@@ -41,4 +41,6 @@ public interface GUI
 	public void help();
         
         public void append(String s);
+        
+        public void victory(int winner);
 }
