@@ -80,6 +80,13 @@ public class Game {
         runGame();
     }
 
+    /*
+     * Sets up the game using the two players provided by creating the BoardGUI
+     * and calling runGame
+     * 
+     * @param p1, the first player
+     * @param p2, the second player
+     */
     public static void startGame(Player p1, Player p2) {
         setP1(p1);
         p1Stop = new Stopwatch();
