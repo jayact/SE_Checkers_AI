@@ -12,8 +12,8 @@ import javax.swing.JLabel;
  * @author mcginl04
  */
 public class BoardGUI extends javax.swing.JFrame implements GUI{
-   // private static final String root = "C:\\Users\\Joe\\Documents\\NetBeansProjects\\checkers\\src\\checkers\\";
-    private static final String root = "/home/jayact/workspace/Senior project/src/checkers/";
+    private static final String root = "C:\\Users\\Joe\\Documents\\NetBeansProjects\\checkers\\src\\checkers\\";
+    //private static final String root = "/home/jayact/workspace/Senior project/src/checkers/";
     private static final ImageIcon EMPTY = new ImageIcon(root +"empty.gif");
     private static final ImageIcon EMPTY_HIGHLIGHT = new ImageIcon(root +"emptyLighted.gif");
     private static final ImageIcon BLACK = new ImageIcon(root +"black.gif");
@@ -380,6 +380,16 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
             playersTurn = 'B';
         isPieceSelected = false;
         return b.getPiece(pos[0], pos[1]);
+    }
+    
+    /*
+     * Appends a victory message to the log field
+     */
+    public void victory(int winner) {
+        if(winner == 0)
+            append("\nR wins!");
+        else
+            append("\nB wins!");
     }
 
     /**
