@@ -98,6 +98,7 @@ public class Game {
      * @throws Exception
      */
     public static void runGame() {
+        gui.help();
         int count = 0;
         while (board.victory() == false) {
             try {
