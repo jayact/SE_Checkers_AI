@@ -38,4 +38,6 @@ public interface GUI
 	 * Standard help command
 	 */
 	public void help();
+        
+        public void append(String s);
 }
