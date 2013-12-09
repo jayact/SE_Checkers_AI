@@ -205,7 +205,7 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
      * @param display, determines between moves('+') or jumps ('*')
      */
     @Override
-    public void display(Board b, ArrayList<Piece> moves, char display) {
+    public void display(Board b, ArrayList<Piece> moves, char display, Piece orig) {
         this.b = b;
         boardPanel.removeAll();
         
@@ -215,7 +215,7 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
                 boolean found = false;
                 for (Piece move : moves) {
                     int[] pos = move.getPosition();
-                    if (row == pos[0] && col == pos[1]) {
+                    if (row == pos[0] && col == pos[1] ) {
                         found = true;
                         if (display == '+') {
                             boardPanel.add(new JLabel(EMPTY_HIGHLIGHT));
@@ -241,24 +241,46 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
                     }
                 }
                 if(found == false) {
-                    switch (p.getColor()) {
-                        case 'R':
-                            if (p.isKing()) {
-                                boardPanel.add(new JLabel(RED_KING));
-                            } else {
-                                boardPanel.add(new JLabel(RED));
-                            }
-                            break;
-                        case 'B':
-                            if (p.isKing()) {
-                                boardPanel.add(new JLabel(BLACK_KING));
-                            } else {
-                                boardPanel.add(new JLabel(BLACK));
-                            }
-                            break;
-                        case '-':
-                            boardPanel.add(new JLabel(EMPTY));
-                    }
+                	if(p.equals(orig))
+                	{
+                		 switch (p.getColor()) {
+                         case 'R':
+                             if (p.isKing()) {
+                                 boardPanel.add(new JLabel(RED_KING_HIGHLIGHT));
+                             } else {
+                                 boardPanel.add(new JLabel(RED_HIGHLIGHT));
+                             }
+                             break;
+                         case 'B':
+                             if (p.isKing()) {
+                                 boardPanel.add(new JLabel(BLACK_KING_HIGHLIGHT));
+                             } else {
+                                 boardPanel.add(new JLabel(BLACK_HIGHLIGHT));
+                             }
+                             break;
+                     }
+                	}
+                	else
+                	{
+	                    switch (p.getColor()) {
+	                        case 'R':
+	                            if (p.isKing()) {
+	                                boardPanel.add(new JLabel(RED_KING));
+	                            } else {
+	                                boardPanel.add(new JLabel(RED));
+	                            }
+	                            break;
+	                        case 'B':
+	                            if (p.isKing()) {
+	                                boardPanel.add(new JLabel(BLACK_KING));
+	                            } else {
+	                                boardPanel.add(new JLabel(BLACK));
+	                            }
+	                            break;
+	                        case '-':
+	                            boardPanel.add(new JLabel(EMPTY));
+	                    }
+                	}
                 }
             }
         }

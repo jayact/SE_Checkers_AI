@@ -25,18 +25,18 @@ public class User extends Player
 	 */
 	public Board takeTurn(Board b, GUI gui) throws Exception {
 		ArrayList<Piece> jumps = b.allJumps(piece);
-		gui.append("\n" + piece + "'s turn\n");
+		gui.append("\n" + piece + "'s turn");
 		if(jumps.size() != 0) //if there are jumps, get the user input for them
 		{
-			gui.append("\n" + piece + " must jump\n");
-			gui.display(b, jumps, '*');
+			gui.append("\n" + piece + " must jump");
+			gui.display(b, jumps, '*', null);
 			Piece p_old = gui.getMove(b, jumps, piece, null);
 			ArrayList<Piece> moves = b.validJumps(p_old);
 			boolean looping = true;
 			boolean jumped = false;
 			while(looping == true)
 			{
-				gui.display(b, moves, '+');
+				gui.display(b, moves, '+', p_old);
 				Piece p_new = gui.getMove(b, moves, '-', p_old);
 				if(p_new == null)//hack for deselect feature
 				{
@@ -57,7 +57,7 @@ public class User extends Player
 			gui.display(b);
 			Piece p_old = gui.getMove(b, piece);
 			ArrayList<Piece> moves = b.validMoves(p_old);
-			gui.display(b, moves, '+');
+			gui.display(b, moves, '+', p_old);
 			Piece p_new = gui.getMove(b, moves, '-', p_old);
 			if(p_new == null)
 				return takeTurn(b,gui);

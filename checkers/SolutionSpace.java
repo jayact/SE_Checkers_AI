@@ -4,7 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-/*
+/**
  * Creates a solution space of all possible moves from a root board position,
  * alternating the moves from player to player.  The solution space will go 
  * a to a fixed depth that can be changed to either increase speed or increase

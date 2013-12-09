@@ -1,13 +1,11 @@
 package checkers;
 
-import Algorithms.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  * This class manages the game's runtime.
  * @author jayact
- *
  */
 public class Game {
 
@@ -40,7 +38,6 @@ public class Game {
 
     /**
      * Sets player 1
-     *
      * @param player1
      */
     public static void setP1(Player player1) {
@@ -49,7 +46,6 @@ public class Game {
 
     /**
      * Sets player 2
-     *
      * @param player2
      */
     public static void setP2(Player player2) {
@@ -63,24 +59,6 @@ public class Game {
      */
     public static void setGUI(BoardGUI Gui) {
         gui = Gui;
-    }
-
-    /**
-     * Sets up the game, then calls runGame() This is all default for now. Once
-     * the menu GUI is set up, this function won't exist.
-     *
-     * @throws Exception
-     */
-    public static void startGame() throws Exception {
-        setP1(new AI('B', new MiniMaxAlphaBeta()));
-        p1Stop = new Stopwatch();
-        //setP1(new User('B'));
-        setP2(new AI('R', new NegaScout()));
-        p2Stop = new Stopwatch();
-        //setP2(new User('R'));
-        //setGUI(new TextGUI());
-        board = new Board();
-        runGame();
     }
 
     /**
@@ -104,7 +82,6 @@ public class Game {
 
     /**
      * Runs the game until a winner is declared.
-     *
      */
     public static void runGame() {
         gui.help();

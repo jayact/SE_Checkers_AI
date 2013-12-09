@@ -118,14 +118,14 @@ public class Node implements Comparable{
     /**
          * Overall heuristic function of the board
          * @param b rated board
-         * @param piece player to give value to
+         * @param color player to give value to
          * @return final heuristic value
          */
-        public void rateBoard(char piece)
+        public void rateBoard(char color)
         {
             int scalar1 = 1;
             int scalar2 = 1;
-            rating = (scalar1*h1(current, piece) + (scalar2*h2(current, piece)));
+            rating = (scalar1*h1(current, color) + (scalar2*h2(current, color)));
         }
         
         public void setRating(int rate)
@@ -138,7 +138,7 @@ public class Node implements Comparable{
 	 * @param b
 	 * @return
 	 */
-	private int h1(Board b, char piece)
+	private int h1(Board b, char color)
 	{
             int result = 0;
             for(int i=0; i<8; i++)
@@ -146,7 +146,7 @@ public class Node implements Comparable{
                 for(int j=0; j<8; j++)
                 {
                     Piece p = b.getPiece(i, j);
-                    if(p.getColor()==piece){
+                    if(p.getColor()==color){
                         result++;
                         if(p.isKing())
                             result++;
@@ -165,10 +165,10 @@ public class Node implements Comparable{
         /**
          * Rates a board by the position advantage
          * @param b
-         * @param piece
+         * @param color
          * @return 
          */
-        private int h2(Board b, char piece)
+        private int h2(Board b, char color)
         {
             int kingVal = 2;
             int result = 0;
@@ -187,7 +187,7 @@ public class Node implements Comparable{
                 {
                     Piece p = b.getPiece(i, j);
                     int pVal = 0;
-                    if(p.getColor() == piece)
+                    if(p.getColor() == color)
                         pVal = posVals[i][j];
                     else if(p.getColor() != '-')
                         pVal = -posVals[i][j];

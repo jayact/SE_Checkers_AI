@@ -15,25 +15,25 @@ public interface GUI
 	 * @param b is the board.
 	 * @param moves is the list of moves, represented as pieces.
 	 */
-	public void display(Board b, ArrayList<Piece> moves, char display);
+	public void display(Board b, ArrayList<Piece> moves, char display, Piece orig);
 	/**
 	 * Gets the piece to move from the user.
 	 * @param b is the board.
-	 * @param piece is the character of the piece we are looking for.
+	 * @param color is the character of the piece we are looking for.
 	 * @return the piece on the board to move.
 	 * @throws Exception if input is improper. (ie. e,f instead of 1,2. )
 	 */
-	public Piece getMove(Board b, char piece)throws Exception;
+	public Piece getMove(Board b, char color)throws Exception;
 	/**
 	 * Gets the location of movement for the piece from the user.
 	 * @param b is the board.
 	 * @param moves is the list of moves.
-	 * @param piece is the character we are looking for in the piece.
+	 * @param color is the character we are looking for in the piece.
 	 * @param orig is the original piece being movved. (for deselect check)
 	 * @return the piece to move to.
 	 * @throws IOException if input is improper (ie. e,f instead of 1,2.)
 	 */
-	public Piece getMove(Board b, ArrayList<Piece> moves, char piece, Piece orig) throws IOException;
+	public Piece getMove(Board b, ArrayList<Piece> moves, char color, Piece orig) throws IOException;
 	
 	/**
 	 * Standard help command

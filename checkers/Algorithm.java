@@ -32,8 +32,8 @@ public abstract class Algorithm
 	/**
 	 * Uses the algorithm specific to each individual class to choose a board
 	 * @param b is the board
-	 * @param piece is the piece
+	 * @param color is the piece
 	 * @return the winning board.
 	 */
-	public abstract Board getMove(Board b, char piece);
+	public abstract Board getMove(Board b, char color);
 }
