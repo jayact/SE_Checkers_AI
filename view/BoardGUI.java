@@ -402,7 +402,7 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
      * Appends a help message to the logField
      */
     public void help() {
-        logField.append("Welcome to \ncheckers! Here \nare the instructions: \n");
-        logField.append("To select a piece \nor move, click the \ncorresponding cell \nof the piece or \nspace you want\n");
+        logField.append("\nWelcome to \ncheckers! \nHere are the \ninstructions: \n");
+        logField.append("\nTo select \na piece or move, \nclick the cell \nof the piece or \nspace you want.\nTo deselect a \npiece, simply \nclick on it!\n");
     }
 }

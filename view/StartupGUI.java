@@ -27,7 +27,7 @@ public class StartupGUI extends javax.swing.JFrame {
                  Thread.currentThread().sleep(1000);//sleep for 1000 ms
                  //do what you want to do after sleeptig
              } catch (InterruptedException ie) {
-                 //If this thread was intrrupted by nother thread
+                 //If this thread was intrrupted by another thread
              }
             }
             return new Player[]{p1, p2};
@@ -55,7 +55,7 @@ public class StartupGUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Checkers Setup");
 
-        matchStartup.setText("Begin Match!");
+        matchStartup.setText("Begin!");
         matchStartup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 matchStartupActionPerformed(evt);
