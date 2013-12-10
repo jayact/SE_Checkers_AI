@@ -55,7 +55,7 @@ public class StartupGUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Checkers Setup");
 
-        matchStartup.setText("Begin Match!");
+        matchStartup.setText("Begin!");
         matchStartup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 matchStartupActionPerformed(evt);

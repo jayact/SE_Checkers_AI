@@ -131,9 +131,13 @@ public class Node implements Comparable{
         	}
         	else
         	{
-	            int scalar1 = 1;
-	            int scalar2 = 1;
-	            rating = (scalar1*h1(current, color) + (scalar2*h2(current, color)));
+	            int scalar1 = 0;
+	            int scalar2 = 0;
+	            int scalar3 = 3;
+	            if(current.bUnits() < 6 || current.rUnits() < 6)
+	            	rating = (scalar1*h1(current, color) + (scalar3*h3(current, color)));
+	            else
+	            	rating = (scalar1*h1(current, color) + (scalar2*h2(current, color)) + (scalar3*h3(current, color)));
         	}
         }
         
@@ -208,7 +212,12 @@ public class Node implements Comparable{
             return result;
         }
         
-    
+        private int h3(Board b, char color)
+        {
+        	if(color == 'B')
+        		return b.bUnits() - b.rUnits();
+        	return b.rUnits() - b.bUnits();
+        }
     
     /**
      * Accessor for parent

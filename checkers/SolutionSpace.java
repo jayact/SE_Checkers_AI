@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  */
 public class SolutionSpace {
     Node root;
-    static int plyDepth = 7;      
+    static int plyDepth = 6;      
     //decrease to increase speed
     //increase to increase skill level
     

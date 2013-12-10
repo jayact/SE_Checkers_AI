@@ -125,9 +125,8 @@ public class Game {
             } catch (InterruptedException ie) {
                 //If this thread was intrrupted by nother thread
             }
-            System.out.println();
+            ///System.out.println();
         }
-        timeStuff();
         gui.victory(board.winner());
         timeStuff();
     }

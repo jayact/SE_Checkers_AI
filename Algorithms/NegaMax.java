@@ -43,7 +43,7 @@ public class NegaMax extends checkers.Algorithm {
     }
 
     private Node maximize(Node current, char piece, int depth) {
-        if (depth == 0) {
+        if (depth == 0 || current.getRating() == Integer.MAX_VALUE) {
 //            int maxRating = 0;
 //            Node maxNode = current;
 //            for(Node n: current.getChildren())
