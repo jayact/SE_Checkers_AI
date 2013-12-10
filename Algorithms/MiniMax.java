@@ -81,43 +81,4 @@ public class MiniMax extends checkers.Algorithm {
             return maxNode.get(r.nextInt(maxNode.size()));
         }
     }
-//    private Node minimize(Node current, char piece, int depth)
-//    {
-//        if(depth == 0)
-//        {
-////            int minRating = Integer.MAX_VALUE;
-////            Node minNode = current;
-////            for(Node n: current.getChildren())
-////            {
-////                n.rateBoard(piece);
-////                if(n.getRating() < minRating)
-////                {
-////                    minRating = n.getRating();
-////                    minNode = n;
-////                }
-////            }
-////            current.setRating(minRating);
-//            return current;
-//        }
-//        else
-//        {
-//            int minRating = Integer.MAX_VALUE;
-//            ArrayList<Node> minNode = new ArrayList<>();
-//            LinkedList<Node> children = current.getChildren();
-//            for(Node n: children)
-//            {
-//                Node temp = maximize(n, min, depth-1);
-//                temp.rateBoard(piece);
-//                int tempRating = temp.getRating();
-//                if(tempRating < minRating)
-//                {
-//                    minRating = tempRating;
-//                    minNode.add(n);
-//                }
-//            }
-//            if(minNode.isEmpty())
-//                return current;
-//            return minNode.get(r.nextInt(minNode.size()));
-//        }
-//    }  
 }

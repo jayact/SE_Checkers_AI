@@ -92,42 +92,4 @@ public class MiniMaxAlphaBeta extends Algorithm {
             return maxNode.get(r.nextInt(maxNode.size()));
         }
     }
-
-//    private Node minimize(Node current, char piece, int depth, Node alpha, Node beta) {
-//        if (depth == 0) {
-////            int minRating = Integer.MAX_VALUE;
-////            Node minNode = current;
-////            for(Node n: current.getChildren())
-////            {
-////                n.rateBoard(piece);
-////                if(n.getRating() < minRating)
-////                {
-////                    minRating = n.getRating();
-////                    minNode = n;
-////                }
-////            }
-////            current.setRating(minRating);
-//            //current.rateBoard(piece);
-//            return current;
-//        } else {
-//            int minRating = beta.getRating();
-//            ArrayList<Node> minNode = new ArrayList<>();
-//            LinkedList<Node> children = current.getChildren();
-//            //Node betaNode = current;
-//            for (Node n : children) {
-//                Node temp = maximize(n, min, depth - 1, alpha, beta);
-//                temp.rateBoard(piece);
-//                int tempRating = temp.getRating();
-//                if (tempRating < minRating) {
-//                    beta = n;
-//                    minNode.add(n);
-//                }
-//            }
-//            if (minNode.isEmpty()) {
-//                return beta;
-//            }
-//            return minNode.get(r.nextInt(minNode.size()));
-//        }
-//
-//    }
 }

@@ -96,7 +96,6 @@ public class Node implements Comparable{
         {
             Board temp = new Board(b);
             boolean remain = temp.makeMove(move, move_to);
-           // result.add(temp);
             if(remain == true)
             {
                 ArrayList<Board> future_list = childrenHelper(temp, temp.getPiece(move_to.getPosition()[0], move_to.getPosition()[1]));
@@ -247,5 +246,10 @@ public class Node implements Comparable{
             return 1;
         else 
             return 0;
+    }
+    
+    public String toString()
+    {
+    	return current.toString();
     }
 }

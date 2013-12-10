@@ -1,9 +1,12 @@
-package checkers;
+package view;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+
+import checkers.Board;
+import checkers.Piece;
 
 /**
  * THIS CLASS IS OUTDATED, AND MUST BE UPDATED TO NEW

@@ -1,4 +1,4 @@
-package checkers;
+package view;
 
 import java.awt.event.ActionEvent;
 import java.io.IOException;
@@ -6,26 +6,27 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import checkers.Board;
+import checkers.GUI;
+import checkers.Piece;
+
 /**
  *This class is the runtime GUI. The user interacts with
  *this to select moves.
  * @author mcginl04
  */
 public class BoardGUI extends javax.swing.JFrame implements GUI{
-    //private static final String root = "C:\\Users\\Joe\\Documents\\NetBeansProjects\\checkers\\src\\checkers\\";
-    //private static final String root = "/home/jayact/workspace/Senior project/src/checkers/";
-    private static final String root = "C:\\Users\\Jack\\Documents\\NetBeansProjects\\Senior Project\\src\\checkers\\";
-    private static final ImageIcon EMPTY = new ImageIcon(root +"empty.gif");
-    private static final ImageIcon EMPTY_HIGHLIGHT = new ImageIcon(root +"emptyLighted.gif");
-    private static final ImageIcon BLACK = new ImageIcon(root +"black.gif");
-    private static final ImageIcon BLACK_HIGHLIGHT = new ImageIcon(root +"blackLighted.gif");
-    private static final ImageIcon RED = new ImageIcon(root +"red.gif");
-    private static final ImageIcon RED_HIGHLIGHT = new ImageIcon(root +"redLighted.gif");
-    private static final ImageIcon BLACK_KING = new ImageIcon(root +"blackKing.gif");
-    private static final ImageIcon BLACK_KING_HIGHLIGHT = new ImageIcon(root +"blackKingLighted.gif");
-    private static final ImageIcon RED_KING = new ImageIcon(root +"redKing.gif");
-    private static final ImageIcon RED_KING_HIGHLIGHT = new ImageIcon(root +"redKingLighted.gif");
-    
+	private static final String root = "/view/Resources/";
+    private static final ImageIcon EMPTY = new ImageIcon(BoardGUI.class.getResource(root + "empty.gif"));
+    private static final ImageIcon EMPTY_HIGHLIGHT = new ImageIcon(BoardGUI.class.getResource(root + "emptyLighted.gif"));
+    private static final ImageIcon BLACK = new ImageIcon(BoardGUI.class.getResource(root + "black.gif"));
+    private static final ImageIcon BLACK_HIGHLIGHT = new ImageIcon(BoardGUI.class.getResource(root + "blackLighted.gif"));
+    private static final ImageIcon RED = new ImageIcon(BoardGUI.class.getResource(root + "red.gif"));
+    private static final ImageIcon RED_HIGHLIGHT = new ImageIcon(BoardGUI.class.getResource(root + "redLighted.gif"));
+    private static final ImageIcon BLACK_KING = new ImageIcon(BoardGUI.class.getResource(root + "blackKing.gif"));
+    private static final ImageIcon BLACK_KING_HIGHLIGHT = new ImageIcon(BoardGUI.class.getResource(root + "blackKingLighted.gif"));
+    private static final ImageIcon RED_KING = new ImageIcon(BoardGUI.class.getResource(root + "redKing.gif"));
+    private static final ImageIcon RED_KING_HIGHLIGHT = new ImageIcon(BoardGUI.class.getResource(root + "redKingLighted.gif"));
     private Board b; //update board after move
     private boolean isPieceSelected = false;
     private char playersTurn = 'b';
@@ -184,6 +185,13 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
         logField.append(s);
     }
 
+    /**
+     * Clears the console
+     */
+    public void clear()
+    {
+    	logField.setText("");
+    }
 
     // Variables declaration - do not modify                     
     private javax.swing.JPanel boardPanel;
@@ -315,7 +323,7 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
             pos = selectedPiece.getPosition();
 
             if (b.getPiece(pos[0], pos[1]).getColor() != color || b.validMoves(b.getPiece(pos[0], pos[1])).isEmpty()) {
-                logField.append("This is not a valid \nchoice.\n");
+                logField.append("\nThis is not a valid \nchoice.\n");
                 isPieceSelected = false;
             } else {
                 valid = true;
@@ -371,7 +379,7 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
 					isPieceSelected = false;
 					return null;
 				}
-				logField.append("This is not a valid \nchoice.\n");
+				logField.append("\nThis is not a valid \nchoice.\n");
                                 isPieceSelected = false;
 			}
         }
@@ -383,14 +391,11 @@ public class BoardGUI extends javax.swing.JFrame implements GUI{
         return b.getPiece(pos[0], pos[1]);
     }
     
-    /*
+    /**
      * Appends a victory message to the log field
      */
-    public void victory(int winner) {
-        if(winner == 0)
-            append("\nR wins!");
-        else
-            append("\nB wins!");
+    public void victory(char winner) {
+        append("\n" + winner + " wins!");
     }
 
     /**

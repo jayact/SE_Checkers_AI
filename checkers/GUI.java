@@ -40,7 +40,20 @@ public interface GUI
 	 */
 	public void help();
         
+	/**
+	 * adds text to the console
+	 * @param s
+	 */
         public void append(String s);
         
-        public void victory(int winner);
+        /**
+         * Declares the winner
+         * @param winner
+         */
+        public void victory(char winner);
+        
+        /**
+         * clears the console
+         */
+        public void clear();
 }

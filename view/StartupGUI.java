@@ -1,4 +1,7 @@
-package checkers;
+package view;
+import checkers.AI;
+import checkers.Player;
+import checkers.User;
 import Algorithms.*;
 
 /**
@@ -11,7 +14,7 @@ public class StartupGUI extends javax.swing.JFrame {
     private static Player p1;
     private static Player p2;
     
-    /*
+    /**
 * returns the players chosen by the user to play the game
 * @return Player[], two players for the game
 */
@@ -98,7 +101,7 @@ public class StartupGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>
 
-    /*
+    /**
 * Button to start the BoardGUI with the chosen players
 */
     private void matchStartupActionPerformed(java.awt.event.ActionEvent evt) {
@@ -110,7 +113,7 @@ public class StartupGUI extends javax.swing.JFrame {
         finishSelection = true;
     }
 
-    /*
+    /**
 * helper method to switch the string returned by the button to a Player
 * @param player, the string representation of the player chosen
 * @param piece, the piece this player will play as, either 'B' or 'R'
@@ -136,14 +139,6 @@ public class StartupGUI extends javax.swing.JFrame {
     /**
 * @param args the command line arguments
 */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                new StartupGUI().setVisible(true);
-            }
-        });
-    }
     // Variables declaration - do not modify
     private javax.swing.JComboBox firstPlayer;
     private javax.swing.JButton matchStartup;

@@ -350,7 +350,7 @@ public class Board{
 			else if(p_color == 'R')
 				b_units--;
 			board.get(pos_new[0]-1*(pos_new[0]-pos_old[0])/2).get(pos_new[1]-1*(pos_new[1]-pos_old[1])/2).setColor('-');
-			if(validJumps(new_p).size() != 0)
+			if(validJumps(getPiece(pos_new[0], pos_new[1])).size() != 0)
 				available = true;
 		}
 		
@@ -359,31 +359,37 @@ public class Board{
 	
 	/**
 	 * determines if victory conditions were met.
+	 * @throws Exception 
 	 * @returns true if met, false otherwise.
 	 */
-	public boolean victory()
+	public boolean victory() throws Exception
 	{
 		if(b_units == 0 || r_units == 0)
 			return true;
-		return noMoves();
+		if(allMoves('B').isEmpty() && allJumps('B').isEmpty())
+            return true;
+		if(allMoves('R').isEmpty() && allJumps('R').isEmpty())
+            return true;
+		return false;
 	}
-        
-        public boolean noMoves()
-        {
-        try {
-            if(allMoves('B').isEmpty() && allJumps('B').isEmpty())
-                return true;
-        } catch (Exception ex) {
-            Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            if(allMoves('R').isEmpty() && allJumps('R').isEmpty())
-                return true;
-        } catch (Exception ex) {
-            Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
-        }
-            return false;
-        }
+	
+	/**
+	 * returns the winner of the game
+	 * @return
+	 * @throws Exception
+	 */
+	public char winner() throws Exception
+	{
+		if(b_units == 0)
+			return 'R';
+		if(r_units == 0)
+			return 'B';
+		if(allMoves('B').isEmpty() && allJumps('B').isEmpty())
+            return 'R';
+		if(allMoves('R').isEmpty() && allJumps('R').isEmpty())
+            return 'B';
+		return '-';
+	}
 	
 	/**
 	 * This returns the list of pieces that can jump. A jump must be made, if available, as per the rules.
@@ -439,5 +445,17 @@ public class Board{
 		return result;
 	}
 
-    
+    public String toString()
+    {
+    	String result = "";
+    	for (int i = 0; i < 8; i++)
+    	{
+    		for(int j = 0; j < 8; j++)
+    		{
+    			result += getPiece(i,j).getColor() + " ";
+    		}
+    		result += "\n";
+    	}
+    	return result;
+    }
 }
