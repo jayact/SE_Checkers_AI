@@ -362,7 +362,7 @@ public class Board{
 	 * @throws Exception 
 	 * @returns true if met, false otherwise.
 	 */
-	public boolean victory() throws Exception
+	public boolean victory()
 	{
 		if(b_units == 0 || r_units == 0)
 			return true;
@@ -378,7 +378,7 @@ public class Board{
 	 * @return
 	 * @throws Exception
 	 */
-	public char winner() throws Exception
+	public char winner()
 	{
 		if(b_units == 0)
 			return 'R';
@@ -425,7 +425,7 @@ public class Board{
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<Piece> allMoves(char color) throws Exception
+	public ArrayList<Piece> allMoves(char color)
 	{
 		ArrayList<Piece> result = new ArrayList<Piece>();
 
@@ -436,9 +436,15 @@ public class Board{
 				Piece p = board.get(i).get(j);
 				if(p.getColor() != '-' && p.getColor() == color)
 				{
-					ArrayList<Piece> moves = validMoves(p);
-					if(moves.size() != 0)
-						result.add(p);
+					try
+					{
+						ArrayList<Piece> moves = validMoves(p);
+						if(moves.size() != 0)
+							result.add(p);
+					}catch(Exception e)
+					{
+						System.out.print(e.getMessage());
+					}
 				}
 			}
 		}

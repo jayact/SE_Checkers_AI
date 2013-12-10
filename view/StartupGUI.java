@@ -131,6 +131,7 @@ public class StartupGUI extends javax.swing.JFrame {
             case "Negascout (AI)": p = new AI(piece, new NegaScout());
                 break;
             case "Negamax (AI)": p = new AI(piece, new NegaMax());
+            	break;
             default: p = new User(piece);
                 break;
         }

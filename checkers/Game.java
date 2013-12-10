@@ -33,10 +33,16 @@ public class Game {
     }
 
     public static void timeStuff() {
-        System.out.println("P1: Total time = " + p1Stop.total());
-        System.out.println("P1: Average time = " + p1Stop.average());
-        System.out.println("P2: Total time = " + p2Stop.total());
-        System.out.println("P2: Average time = " + p2Stop.average());
+    	if(p1 instanceof AI)
+    	{
+	        gui.append("P1: Total time = " + p1Stop.total());
+	        gui.append("P1: Average time = " + p1Stop.average());
+    	}
+    	if(p2 instanceof AI)
+    	{
+	        gui.append("P2: Total time = " + p2Stop.total());
+	        gui.append("P2: Average time = " + p2Stop.average());
+    	}
     }
 
     /**
@@ -89,7 +95,8 @@ public class Game {
      * @throws Exception 
      */
     public static void runGame() throws Exception {
-        gui.help();
+    	if(p1 instanceof User || p2 instanceof User)
+    		gui.help();
         int count = 0;
         while (board.victory() == false) {
             try {
@@ -97,13 +104,13 @@ public class Game {
                 	gui.append(p1.piece + "'s turn!");
                     p1Stop.start();
                     board = p1.takeTurn(board, gui);
-                    System.out.println("Player 1 took: " + p1Stop.end() + " milliseconds");
+                    //System.out.println("Player 1 took: " + p1Stop.end() + " milliseconds");
                 } else {
                 	gui.append(p2.piece + "'s turn!");
                     p2Stop.start();
                     board = p2.takeTurn(board, gui);
                     p2Stop.end();
-                    System.out.println("Player 2 took: " + p2Stop.end() + " milliseconds");
+                    //System.out.println("Player 2 took: " + p2Stop.end() + " milliseconds");
                 }
             } catch (Exception e) {
                 System.out.println("Error encountered: " + e.getMessage());
@@ -121,5 +128,6 @@ public class Game {
             gui.clear();
         }
         gui.victory(board.winner());
+        timeStuff();
     }
 }

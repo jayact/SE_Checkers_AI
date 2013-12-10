@@ -122,9 +122,19 @@ public class Node implements Comparable{
          */
         public void rateBoard(char color)
         {
-            int scalar1 = 1;
-            int scalar2 = 1;
-            rating = (scalar1*h1(current, color) + (scalar2*h2(current, color)));
+        	if(current.victory())
+        	{
+        		if(current.winner() == color)
+        			rating = Integer.MAX_VALUE;
+        		else 
+					rating = Integer.MIN_VALUE;
+        	}
+        	else
+        	{
+	            int scalar1 = 1;
+	            int scalar2 = 1;
+	            rating = (scalar1*h1(current, color) + (scalar2*h2(current, color)));
+        	}
         }
         
         public void setRating(int rate)
