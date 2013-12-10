@@ -1,10 +1,9 @@
 package checkers;
 
+import view.StartupGUI;
+import view.BoardGUI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import view.BoardGUI;
-import view.StartupGUI;
 
 /**
  * This class manages the game's runtime.
@@ -76,9 +75,8 @@ public class Game {
      * 
      * @param p1, the first player
      * @param p2, the second player
-     * @throws Exception 
      */
-    public static void startGame(Player p1, Player p2) throws Exception {
+    public static void startGame(Player p1, Player p2) {
         setP1(p1);
         p1Stop = new Stopwatch();
         setP2(p2);
@@ -87,12 +85,15 @@ public class Game {
         gui = new BoardGUI();
 
         gui.display(board);
-        runGame();
+        try {
+            runGame();
+        } catch (Exception ex) {
+            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
      * Runs the game until a winner is declared.
-     * @throws Exception 
      */
     public static void runGame() throws Exception {
     	if(p1 instanceof User || p2 instanceof User)
@@ -101,18 +102,17 @@ public class Game {
         while (board.victory() == false) {
             try {
                 if (count % 2 == 0) {
-                	gui.append(p1.piece + "'s turn!");
                     p1Stop.start();
                     board = p1.takeTurn(board, gui);
                     //System.out.println("Player 1 took: " + p1Stop.end() + " milliseconds");
                 } else {
-                	gui.append(p2.piece + "'s turn!");
                     p2Stop.start();
                     board = p2.takeTurn(board, gui);
                     p2Stop.end();
                     //System.out.println("Player 2 took: " + p2Stop.end() + " milliseconds");
                 }
             } catch (Exception e) {
+                timeStuff();
                 System.out.println("Error encountered: " + e.getMessage());
                 System.exit(10);
             }
@@ -120,13 +120,14 @@ public class Game {
             gui.display(board);
             try {
                 //do what you want to do before sleeping
-                Thread.currentThread().sleep(1000);//sleep for 1000 ms
+                Thread.currentThread().sleep(2000);//sleep for 1000 ms
                 //do what you want to do after sleeptig
             } catch (InterruptedException ie) {
                 //If this thread was intrrupted by nother thread
             }
-            gui.clear();
+            System.out.println();
         }
+        timeStuff();
         gui.victory(board.winner());
         timeStuff();
     }
