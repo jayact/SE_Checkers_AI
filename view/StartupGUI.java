@@ -1,8 +1,8 @@
 package view;
+import Algorithms.*;
 import checkers.AI;
 import checkers.Player;
 import checkers.User;
-import Algorithms.*;
 
 /**
 *T
@@ -14,7 +14,7 @@ public class StartupGUI extends javax.swing.JFrame {
     private static Player p1;
     private static Player p2;
     
-    /**
+    /*
 * returns the players chosen by the user to play the game
 * @return Player[], two players for the game
 */
@@ -27,7 +27,7 @@ public class StartupGUI extends javax.swing.JFrame {
                  Thread.currentThread().sleep(1000);//sleep for 1000 ms
                  //do what you want to do after sleeptig
              } catch (InterruptedException ie) {
-                 //If this thread was intrrupted by another thread
+                 //If this thread was intrrupted by nother thread
              }
             }
             return new Player[]{p1, p2};
@@ -55,7 +55,7 @@ public class StartupGUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Checkers Setup");
 
-        matchStartup.setText("Begin!");
+        matchStartup.setText("Begin Match!");
         matchStartup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 matchStartupActionPerformed(evt);
@@ -101,7 +101,7 @@ public class StartupGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>
 
-    /**
+    /*
 * Button to start the BoardGUI with the chosen players
 */
     private void matchStartupActionPerformed(java.awt.event.ActionEvent evt) {
@@ -113,7 +113,7 @@ public class StartupGUI extends javax.swing.JFrame {
         finishSelection = true;
     }
 
-    /**
+    /*
 * helper method to switch the string returned by the button to a Player
 * @param player, the string representation of the player chosen
 * @param piece, the piece this player will play as, either 'B' or 'R'
@@ -131,6 +131,7 @@ public class StartupGUI extends javax.swing.JFrame {
             case "Negascout (AI)": p = new AI(piece, new NegaScout());
                 break;
             case "Negamax (AI)": p = new AI(piece, new NegaMax());
+                break;
             default: p = new User(piece);
                 break;
         }
@@ -139,6 +140,14 @@ public class StartupGUI extends javax.swing.JFrame {
     /**
 * @param args the command line arguments
 */
+    public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+
+            public void run() {
+                new StartupGUI().setVisible(true);
+            }
+        });
+    }
     // Variables declaration - do not modify
     private javax.swing.JComboBox firstPlayer;
     private javax.swing.JButton matchStartup;

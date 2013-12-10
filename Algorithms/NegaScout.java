@@ -8,34 +8,26 @@ import checkers.Algorithm;
 import checkers.Board;
 import checkers.Node;
 import checkers.SolutionSpace;
-import java.util.ArrayList;
-import java.util.LinkedList;
 
 /**
  *
  * @author Jack
  */
 public class NegaScout extends Algorithm {
-
-    public NegaScout() {
+    
+    public NegaScout()
+    {
         super();
     }
 
-    /**
-     * Uses the negascout algorithm to decide what move to make.
-     *
-     * @param b present board state
-     * @param piece maximizing player
-     * @return move that involves the least risk from the current board state
-     */
     @Override
-    public Board getMove(Board b, char piece) {
+    public Board getMove(Board b, char piece) 
+    {
         max = piece;
-        if (piece == 'R') {
+        if(piece == 'R')
             min = 'B';
-        } else {
+        else
             min = 'R';
-        }
         tree = new SolutionSpace(b, max);
         plyDepth = tree.getPlyDepth();
         root = tree.getRoot();
@@ -46,9 +38,11 @@ public class NegaScout extends Algorithm {
         beta.setRating(Integer.MAX_VALUE);
         return maximize(root, max, plyDepth, alpha, beta).getCurrent();
     }
-
-    private Node maximize(Node current, char piece, int depth, Node alpha, Node beta) {
-        if (depth == 0) {
+    
+    private Node maximize(Node current, char piece, int depth, Node alpha, Node beta)
+    {
+        if(depth == 0)
+        {
 //            int maxRating = 0;
 //            Node maxNode = current;
 //            for(Node n: current.getChildren())
@@ -63,17 +57,15 @@ public class NegaScout extends Algorithm {
 //            current.setRating(maxRating);
             //current.rateBoard(piece);
             return current;
-        } else {
+        }
+        else
+        {
             int maxRating = alpha.getRating();
-            ArrayList<Node> maxNode = new ArrayList<>();
-            LinkedList<Node> children = current.getChildren();
+            Node maxNode = alpha;
             //Node alphaNode = current;
-            for (Node n : children) {
-                char ctemp = max;
-                max = min;
-                min = ctemp;
-                //Node temp = maximize(n, min, depth-1);
-                Node temp = maximize(n, max, depth - 1, alpha, beta);
+            for(Node n: current.getChildren())
+            {
+                Node temp = minimize(n, min, depth-1, alpha, beta);
                 temp.rateBoard(piece);
                 int tempRating = temp.getRating();
 //                if(tempRating > alpha)
@@ -81,15 +73,55 @@ public class NegaScout extends Algorithm {
 //                    alpha = tempRating;
 //                    alphaNode = n;
 //                }
-                if (tempRating > maxRating) {
+                if(tempRating > maxRating)
+                {
                     alpha = n;
-                    maxNode.add(n);
+                    maxNode = n;
                 }
             }
-            if (maxNode.isEmpty()) {
-                return beta;
-            }
-            return maxNode.get(r.nextInt(maxNode.size()));
+            return maxNode;
         }
     }
+    
+    private Node minimize(Node current, char piece, int depth, Node alpha, Node beta)
+    {
+        if(depth == 0)
+        {
+//            int minRating = Integer.MAX_VALUE;
+//            Node minNode = current;
+//            for(Node n: current.getChildren())
+//            {
+//                n.rateBoard(piece);
+//                if(n.getRating() < minRating)
+//                {
+//                    minRating = n.getRating();
+//                    minNode = n;
+//                }
+//            }
+//            current.setRating(minRating);
+            //current.rateBoard(piece);
+            return current;
+        }
+        else
+        {
+            int minRating = beta.getRating();
+            Node minNode = beta;
+            //Node betaNode = current;
+            for(Node n: current.getChildren())
+            {
+                Node temp = maximize(n, min, depth-1, alpha, beta);
+                temp.rateBoard(piece);
+                int tempRating = temp.getRating();
+                if(tempRating < minRating)
+                {
+                    beta = n;
+                    minNode = n;
+                }
+            }
+            return minNode;
+        }
+        
+    }
+    
+    
 }
