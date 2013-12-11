@@ -28,56 +28,43 @@ public class MiniMax extends checkers.Algorithm {
      */
     @Override
     public Board getMove(Board b, char piece) {
-        max = piece;
-        if (piece == 'R') {
-            min = 'B';
-        } else {
-            min = 'R';
-        }
-        tree = new SolutionSpace(b, max);
+        tree = new SolutionSpace(b, piece);
         plyDepth = tree.getPlyDepth();
         root = tree.getRoot();
-        Board move = maximize(root, max, plyDepth).getCurrent();
+        Board move = maximize(root, piece, plyDepth).getCurrent();
         return move;
     }
 
     private Node maximize(Node current, char piece, int depth) {
-        if (depth == 0 || current.getRating() == Integer.MAX_VALUE) {
-//            int maxRating = 0;
-//            Node maxNode = current;
-//            for(Node n: current.getChildren())
-//            {
-//                n.rateBoard(piece);
-//                if(n.getRating() > maxRating)
-//                {
-//                    maxRating = n.getRating();
-//                    maxNode = n;
-//                }
-//            }
-//            current.setRating(maxRating);
+        if (depth == 0 || current.getRating() == Integer.MAX_VALUE || current.getRating() == Integer.MIN_VALUE) {
             return current;
-        } else {
+        } 
+        else 
+        {
             int maxRating = Integer.MIN_VALUE;
             ArrayList<Node> maxNode = new ArrayList<>();
             LinkedList<Node> children = current.getChildren();
             for (Node n : children) {
-                char ctemp = max;
-                max = min;
-                min = ctemp;
+                char other;
+            	if(piece == 'B')
+            		other = 'R';
+            	else
+            		other = 'B';
                 //Node temp = maximize(n, min, depth-1);
-                Node temp = maximize(n, max, depth - 1);
+                Node temp = maximize(n, other, depth - 1);
                 temp.rateBoard(piece);
                 int tempRating = temp.getRating();
                 if (tempRating == maxRating) {
+                	maxNode.add(n);
                 } else if (tempRating > maxRating) {
                     maxRating = tempRating;
+                    maxNode.clear();
                     maxNode.add(n);
                 }
 
             }
-            if (maxNode.isEmpty()) {
-                return current;
-            }
+            if(maxNode.size() == 0)
+            	return current;
             return maxNode.get(r.nextInt(maxNode.size()));
         }
     }

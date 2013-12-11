@@ -37,7 +37,7 @@ public class SolutionSpace {
         try {
             helper(root, color, plyDepth);
         } catch (Exception ex) {
-            Logger.getLogger(SolutionSpace.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SolutionSpace.class.getName()).log(Level.SEVERE, null, ex.getMessage());
         }
     }
     
@@ -49,7 +49,7 @@ public class SolutionSpace {
      * @param count the amount of iterations to repeat
      * @throws Exception
      */
-    private void helper(Node current, char color, int count) throws Exception
+    private void helper(Node current, char color, int count)
     {
         char other;
         if(color == 'B')
@@ -59,7 +59,7 @@ public class SolutionSpace {
 
         if(count==0)
             return;
-        if(current.getCurrent().victory())
+        if(current.getCurrent().victory('B') || current.getCurrent().victory('R'))
             return;
         current.createChildren(color);
         for(int i=0; i<current.children.size(); i++)

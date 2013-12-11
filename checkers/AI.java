@@ -28,6 +28,19 @@ public class AI extends Player {
      */
     @Override
     public Board takeTurn(Board b, GUI gui) {
-        return algo.getMove(b, piece);
+    	boolean tookTurn = false;
+    	Board result = new Board(b);
+    	while(tookTurn == false)
+    	{
+    		result = algo.getMove(b, piece);
+    		if(b.equals(result))
+    		{
+    			gui.append("\nAI didn't take turn\n");
+    		}
+    		else
+    			tookTurn = true;
+        
+    	}
+    	return result;
     }
 }

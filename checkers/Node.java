@@ -19,8 +19,7 @@ public class Node implements Comparable{
     Board current;
     LinkedList<Node> children = new LinkedList<>();
     int rating;
-    private static int boardSize = 8;
-    private static QuickSort q = new QuickSort();
+    private static QuickSort<Node> q = new QuickSort<Node>();
     
     /**
      * Creates an instance of a Node object
@@ -52,7 +51,7 @@ public class Node implements Comparable{
      * @param piece specifies player that can make the move
      * @throws Exception 
      */
-    public void createChildren(char color) throws Exception
+    public void createChildren(char color)
     {
         ArrayList<Piece> moveable = current.allJumps(color);
         if(moveable.size() != 0) //if it's a jump, take it. find the final states and return it.
@@ -75,8 +74,13 @@ public class Node implements Comparable{
                 for(Piece move_to : move_list)
                 {
                     Board temp = new Board(current);
-                    temp.makeMove(move, move_to);
-                    children.add(new Node(this, temp));
+                    try {
+						temp.makeMove(move, move_to);
+						children.add(new Node(this, temp));
+					} catch (Exception e) {
+						System.out.println("Move not made: " + move + "-->" + move_to);
+					}
+                    
                 }
             }
         }
@@ -88,28 +92,34 @@ public class Node implements Comparable{
      * @return the final jump states
      * @throws Exception
      */
-    private ArrayList<Board> childrenHelper(Board b, Piece move) throws Exception
+    private ArrayList<Board> childrenHelper(Board b, Piece move)
     {
         ArrayList<Board> result = new ArrayList<Board>();
         ArrayList<Piece> move_list = b.validJumps(move);
         for(Piece move_to : move_list)
         {
             Board temp = new Board(b);
-            boolean remain = temp.makeMove(move, move_to);
-            if(remain == true)
-            {
-                ArrayList<Board> future_list = childrenHelper(temp, temp.getPiece(move_to.getPosition()[0], move_to.getPosition()[1]));
-                for(Board future : future_list)
-                {
-                    result.add(future);
-                }
-                if(future_list.size() == 0)
-                	result.add(temp);
-            }
-            else
-            {
-                result.add(temp);
-            }
+            boolean remain;
+			try {
+				remain = temp.makeMove(move, move_to);
+				if(remain == true)
+	            {
+	                ArrayList<Board> future_list = childrenHelper(temp, temp.getPiece(move_to.getPosition()[0], move_to.getPosition()[1]));
+	                for(Board future : future_list)
+	                {
+	                    result.add(future);
+	                }
+	                if(future_list.size() == 0)
+	                	result.add(temp);
+	            }
+	            else
+	            {
+	                result.add(temp);
+	            }
+			} catch (Exception e) {
+				System.out.println("Error: " + e.getMessage());
+			}
+            
         }
         return result;
     }
@@ -122,7 +132,7 @@ public class Node implements Comparable{
          */
         public void rateBoard(char color)
         {
-        	if(current.victory())
+        	if(current.victory('B') || current.victory('R'))
         	{
         		if(current.winner() == color)
         			rating = Integer.MAX_VALUE;
@@ -133,11 +143,9 @@ public class Node implements Comparable{
         	{
 	            int scalar1 = 0;
 	            int scalar2 = 0;
-	            int scalar3 = 3;
-	            if(current.bUnits() < 6 || current.rUnits() < 6)
-	            	rating = (scalar1*h1(current, color) + (scalar3*h3(current, color)));
-	            else
-	            	rating = (scalar1*h1(current, color) + (scalar2*h2(current, color)) + (scalar3*h3(current, color)));
+	            int scalar3 = 2;
+	            int scalar4 = 1;
+	            rating = (scalar1*h1(current, color) + (scalar2*h2(current, color)) + (scalar3*h3(current, color)) + scalar4*h4(current,color));
         	}
         }
         
@@ -217,6 +225,23 @@ public class Node implements Comparable{
         	if(color == 'B')
         		return b.bUnits() - b.rUnits();
         	return b.rUnits() - b.bUnits();
+        }
+        
+        private int h4(Board b, char color)
+        {
+        	int result = 0;
+        	for(int i = 0; i < 8; i++)
+        	{
+        		for(int j = 0; j < 8; j++)
+        		{
+        			Piece p = b.getPiece(i, j);
+        			if(p.getColor() == color && p.isKing() == true)
+        			{
+        				result++;
+        			}
+        		}
+        	}
+        	return result;
         }
     
     /**

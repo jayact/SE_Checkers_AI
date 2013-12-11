@@ -130,7 +130,7 @@ public class Board{
 	 * @return is the list of valid moves (represented as pieces)
 	 * @throws Exception 
 	 */
-	public ArrayList<Piece> validMoves(Piece p) throws Exception
+	public ArrayList<Piece> validMoves(Piece p)
 	{
 		int[] position = p.getPosition();
 		int p_row = position[0];
@@ -149,11 +149,10 @@ public class Board{
 			up_limit = 7;
 			down_limit = 0;
 		}
-		if(p_color == '-')
-			throw new Exception("Trying to move a " + p_color + " piece in Board.");
-		
 		ArrayList<Piece> moves = new ArrayList<Piece>();
-		int count = 0;
+		if(p_color == '-')
+			return moves;
+		
 		
 		//Check single moves first.
 		//If in bounds and diagnal space is free, add it.
@@ -165,7 +164,6 @@ public class Board{
 				if(temp.getColor() == '-') //if the piece to the left is empty
 				{
 					moves.add(new Piece(temp.getColor(), p_row-1*direction, p_col-1));
-					count++;
 				}
 			}
 			
@@ -175,7 +173,6 @@ public class Board{
 				if(temp.getColor() == '-')
 				{
 					moves.add(new Piece(temp.getColor(), p_row-1*direction, p_col+1));
-					count++;
 				}
 			}
 		}
@@ -188,7 +185,6 @@ public class Board{
 				if(temp.getColor() == '-')
 				{
 					moves.add(new Piece(temp.getColor(), p_row+1*direction, p_col-1));
-					count++;
 				}
 			}
 			if(p_col < 7)
@@ -197,7 +193,6 @@ public class Board{
 				if(temp.getColor() == '-')
 				{
 					moves.add(new Piece(temp.getColor(), p_row+1*direction, p_col+1));
-					count++;
 				}
 			}
 		}
@@ -362,13 +357,11 @@ public class Board{
 	 * @throws Exception 
 	 * @returns true if met, false otherwise.
 	 */
-	public boolean victory()
+	public boolean victory(char player)
 	{
 		if(b_units == 0 || r_units == 0)
 			return true;
-		if(allMoves('B').isEmpty() && allJumps('B').isEmpty())
-            return true;
-		if(allMoves('R').isEmpty() && allJumps('R').isEmpty())
+		if(allMoves(player).isEmpty() && allJumps(player).isEmpty())
             return true;
 		return false;
 	}
@@ -399,7 +392,6 @@ public class Board{
 	public ArrayList<Piece> allJumps(char color)
 	{
 		ArrayList<Piece> result = new ArrayList<Piece>();
-		int count = 0;
 		for(int row = 0; row < 8; row++)
 		{
 			for(int col = 0; col < 8; col++)
@@ -411,7 +403,6 @@ public class Board{
 					if(r.size() != 0)
 					{
 						result.add(p);
-						count++;
 					}
 				}
 			}
@@ -463,5 +454,25 @@ public class Board{
     		result += "\n";
     	}
     	return result;
+    }
+    
+    public boolean equals(Object o)
+    {
+    	if(!(o instanceof Board))
+    		return false;
+    	Board b = (Board)o;
+    	if(b.bUnits() != bUnits() || b.rUnits() != rUnits())
+    		return false;
+    	for(int i = 0; i < 8; i++)
+    	{
+    		for(int j = 0; j < 8; j++)
+    		{
+    			if(!(getPiece(i, j)).equals(b.getPiece(i, j)))
+    			{
+    				return false;
+    			}
+    		}
+    	}
+    	return true;
     }
 }

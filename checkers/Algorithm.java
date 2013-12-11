@@ -13,8 +13,6 @@ public abstract class Algorithm
     protected SolutionSpace tree;
     protected int plyDepth;
     protected Node root;
-    protected char max;
-    protected char min;
     protected Random r = new Random();
     
     /**

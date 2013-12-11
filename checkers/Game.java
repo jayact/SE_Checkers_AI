@@ -34,13 +34,13 @@ public class Game {
     public static void timeStuff() {
     	if(p1 instanceof AI)
     	{
-	        gui.append("P1: Total time = " + p1Stop.total());
-	        gui.append("P1: Average time = " + p1Stop.average());
+	        gui.append("\nP1: Total time:\n" + p1Stop.total());
+	        gui.append("\nP1: Average time\n" + p1Stop.average());
     	}
     	if(p2 instanceof AI)
     	{
-	        gui.append("P2: Total time = " + p2Stop.total());
-	        gui.append("P2: Average time = " + p2Stop.average());
+	        gui.append("\nP2: Total time:\n" + p2Stop.total());
+	        gui.append("\nP2: Average time:\n" + p2Stop.average());
     	}
     }
 
@@ -88,44 +88,50 @@ public class Game {
         try {
             runGame();
         } catch (Exception ex) {
-            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex.getMessage());
         }
     }
 
     /**
      * Runs the game until a winner is declared.
      */
-    public static void runGame() throws Exception {
+    public static void runGame() {
     	if(p1 instanceof User || p2 instanceof User)
     		gui.help();
-        int count = 0;
-        while (board.victory() == false) {
+        char play = 'B';
+        while (board.victory(play) == false) {
             try {
-                if (count % 2 == 0) {
+                if (play == 'B') {
+                	gui.append("\n" +p1.piece + "'s turn!");
                     p1Stop.start();
                     board = p1.takeTurn(board, gui);
-                    //System.out.println("Player 1 took: " + p1Stop.end() + " milliseconds");
+                    p1Stop.end();
+                    play = 'R';
                 } else {
+                	gui.append("\n" +p2.piece + "'s turn!");
                     p2Stop.start();
                     board = p2.takeTurn(board, gui);
                     p2Stop.end();
-                    //System.out.println("Player 2 took: " + p2Stop.end() + " milliseconds");
+                    play = 'B';
                 }
             } catch (Exception e) {
                 timeStuff();
                 System.out.println("Error encountered: " + e.getMessage());
-                System.exit(10);
+                //System.exit(10);
             }
-            count++;
+
             gui.display(board);
-            try {
-                //do what you want to do before sleeping
-                Thread.currentThread().sleep(2000);//sleep for 1000 ms
-                //do what you want to do after sleeptig
-            } catch (InterruptedException ie) {
-                //If this thread was intrrupted by nother thread
-            }
-            ///System.out.println();
+           /* if(p1 instanceof AI || p2 instanceof AI)
+            {
+	            try {
+	                //do what you want to do before sleeping
+	                Thread.currentThread().sleep(2000);//sleep for 1000 ms
+	                //do what you want to do after sleeptig
+	            } catch (InterruptedException ie) {
+	                //If this thread was intrrupted by nother thread
+	            }
+            }*/
+            gui.clear();
         }
         gui.victory(board.winner());
         timeStuff();
