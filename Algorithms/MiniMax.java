@@ -29,6 +29,7 @@ public class MiniMax extends checkers.Algorithm {
     @Override
     public Board getMove(Board b, char piece) {
         tree = new SolutionSpace(b, piece);
+        tree.setPlyDepth(4);
         plyDepth = tree.getPlyDepth();
         root = tree.getRoot();
         Board move = maximize(root, piece, plyDepth).getCurrent();

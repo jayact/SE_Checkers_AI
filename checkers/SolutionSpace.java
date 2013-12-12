@@ -83,4 +83,9 @@ public class SolutionSpace {
     {
             return plyDepth;
     }
+    
+    public void setPlyDepth(int i)
+    {
+        plyDepth = i;
+    }
 }
