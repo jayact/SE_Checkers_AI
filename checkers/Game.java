@@ -121,16 +121,16 @@ public class Game {
             }
 
             gui.display(board);
-//            if(p1 instanceof AI || p2 instanceof AI)
-//            {
-//	            try {
-//	                //do what you want to do before sleeping
-//	                Thread.currentThread().sleep(2000);//sleep for 1000 ms
-//	                //do what you want to do after sleeptig
-//	            } catch (InterruptedException ie) {
-//	                //If this thread was intrrupted by nother thread
-//	            }
-//            }
+            if(play == p1.piece && p1 instanceof AI || (play == p2.piece && p2 instanceof AI))
+            {
+	            try {
+	                //do what you want to do before sleeping
+	                Thread.currentThread().sleep(1000);//sleep for 1000 ms
+	                //do what you want to do after sleeptig
+	            } catch (InterruptedException ie) {
+            //if this thread was intrrupted by nother thread
+	            }
+            }
             gui.clear();
         }
         gui.victory(board.winner());
